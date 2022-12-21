@@ -49,7 +49,15 @@ Route::group([
 });
 
 
-Route::post('update-profile/{user_id}',[UpdateProfile::class,'update']);
+Route::group(['middleware'=>'jwt.verify'],function (){
+
+    Route::post('update-profile/{user_id}',[UpdateProfile::class,'update']);
+
+
+
+});
+
+
 
 
 
