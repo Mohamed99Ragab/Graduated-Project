@@ -42,15 +42,16 @@ class SocialAuthController extends Controller
         $user = Socialite::driver($this->provider)->stateless()->userFromToken($this->access_token);
 //        dd($user);
         // find or create an authenticated user
-        if (!$authenticatedUser = User::where('email', $user->email)->first()) {
+        if (!$authenticatedUser = User::where('provider_id', $user->id)->first()) {
             $authenticatedUser = User::create([
                 'email' => $user->email,
-                'name' => $this->provider=='google'?$user->name : $user->nickname,
+                'name' => $user->name,
                 'photo'=>null,
                 'birth_date'=>null,
                 'gender'=>null,
                 'password'=>null,
                 'provider' => $this->provider,
+                'provider_id' => $user->id,
                 'oauth_token' => $user->token
             ]);
         }

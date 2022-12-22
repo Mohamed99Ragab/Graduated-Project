@@ -36,4 +36,10 @@ return [
         'redirect' => 'http://127.0.0.1:8000/auth/callback',
     ],
 
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+        'redirect' => 'https://baby-health-care.sonicar.tech/auth/callback/facebook',
+    ],
+
 ];

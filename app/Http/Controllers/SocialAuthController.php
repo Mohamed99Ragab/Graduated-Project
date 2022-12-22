@@ -43,4 +43,45 @@ class SocialAuthController extends Controller
 
     }
 
-}
+
+
+
+
+    public function facebook_redirect(){
+
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function facebook_callback()
+    {
+
+
+        $user = Socialite::driver('facebook')->user();
+        dd($user);
+
+        $user_db = User::where('email', $user->email)->first();
+        if ($user_db == null) {
+            $user_db = User::create([
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'email' => $user->email,
+                'password' => Hash::make('123456'),
+                'OAth_Token' => $user->token
+            ]);
+
+            Auth::login($user_db);
+            return redirect(route('home'));
+        } else {
+            Auth::login($user_db);
+            return redirect(route('home'));
+        }
+
+    }
+
+
+
+
+
+
+
+    }
