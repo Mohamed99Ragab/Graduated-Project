@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserAuth;
 use App\Http\Traits\FilesManagement;
+use App\Models\DeviceToken;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
@@ -23,11 +25,20 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email|exists:users,email',
             'password' => 'required|string',
+            'fcm_token'=>'required'
         ]);
 
         if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
             return response()->json(['error' => 'خطاء في بيانات الدخول'], 401);
         }
+
+        // add devive token to user
+        DeviceToken::updateOrCreate(
+            ['token' => $request->fcm_token],
+            ['user_id' => Auth::guard('api')->id()]
+        );
+
+
         return $this->createNewToken($token);
     }
 
@@ -41,6 +52,7 @@ class AuthController extends Controller
             'gender'=>'required|string|in:ذكر,انثى',
             'birth_date'=>'required|date',
             'password' => 'required|string|confirmed|min:6',
+             'fcm_token'=>'required'
         ]);
 
 
@@ -66,6 +78,13 @@ class AuthController extends Controller
         if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
             return response()->json(['error' => 'خطاء في عملية الدخول'], 401);
         }
+
+        // add devive token to user
+        DeviceToken::create([
+            'token' => $request->fcm_token,
+            'user_id' => Auth::guard('api')->id()
+        ]);
+
         return $this->createNewToken($token);
 
     }

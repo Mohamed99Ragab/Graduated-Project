@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserAuth;
+use App\Models\DeviceToken;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
     private $provider;
-    private $access_token;
+    private $oauth_token;
     private $token;
 
     public function __construct(Request $request)
@@ -20,7 +22,7 @@ class SocialAuthController extends Controller
 
 
         $this->provider = ($request->has('provider') ? $request->get('provider') : false);
-        $this->access_token = ($request->has('access_token') ? $request->get('access_token') : false);
+        $this->oauth_token = ($request->has('oauth_token') ? $request->get('oauth_token') : false);
     }
 
     /**
@@ -33,13 +35,14 @@ class SocialAuthController extends Controller
     public function token(Request $request)
     {
         $request->validate([
-            'access_token'=>'required|string',
-            'provider'=>'required|string|in:google,facebook'
+            'oauth_token'=>'required|string',
+            'provider'=>'required|string|in:google,facebook',
+            'fcm_token'=>'required'
         ]);
 
 
         // authenticate the token against the provider
-        $user = Socialite::driver($this->provider)->stateless()->userFromToken($this->access_token);
+        $user = Socialite::driver($this->provider)->stateless()->userFromToken($this->oauth_token);
 //        dd($user);
         // find or create an authenticated user
         if (!$authenticatedUser = User::where('provider_id', $user->id)->first()) {
@@ -58,6 +61,13 @@ class SocialAuthController extends Controller
 
         // login the user & get an access token for the API
         $this->token = auth()->guard('api')->login($authenticatedUser);
+
+        // add devive token to user
+        DeviceToken::updateOrCreate(
+            ['token' => $request->fcm_token],
+            ['user_id' => Auth::guard('api')->id()]
+        );
+
 
         // respond with the access token
         return $this->respondWithToken($this->token,$authenticatedUser);

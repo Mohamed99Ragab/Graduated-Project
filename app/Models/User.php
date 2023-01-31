@@ -72,6 +72,32 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+################### relationship between user and deviceTokens ##############
+
+    public function getDeviceTokens(){
+
+        return $this->hasMany(DeviceToken::class,'user_id');
+    }
+
+
+
+
+################ end relationship ###################################
+
+
+
+    ############ firebase method to push notification ###########
+    public function routeNotificationForFcm()
+    {
+        return $this->getDeviceTokens()->pluck('token')->toArray();
+    }
+
+
+############ end firebase method to push notification with this tokens ###########
+
+
+
+
 
 
 }

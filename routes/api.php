@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\RestPassword\ForgotPasswordController;
+use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\SocialAuthController;
+use App\Http\Controllers\Api\Auth\UpdateProfile;
 use App\Http\Controllers\Api\RestPassword\CodeCheckController;
+use App\Http\Controllers\Api\RestPassword\ForgotPasswordController;
 use App\Http\Controllers\Api\RestPassword\ResetPasswordController;
-use App\Http\Controllers\Api\SocialAuthController;
-use App\Http\Controllers\Api\UpdateProfile;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

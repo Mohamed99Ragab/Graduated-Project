@@ -14,5 +14,5 @@
 <script src="{{asset('dashboard/assets/js/pages/dashboard.init.js')}}"></script>
 
 <script src="{{asset('dashboard/assets/js/app.js')}}"></script>
-
+<script src="{{asset('js/firebase.js')}}"></script>
 @yield('js')

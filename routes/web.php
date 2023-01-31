@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Models\User;
+use App\Notifications\FcmPushNotification;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -19,16 +21,16 @@ Route::get('/home', function () {
     return view('dashboard.home');
 })->middleware('auth:admin')->name('dashboard');
 
+Route::get('/', function () {
+    return view('dashboard.login');
+})->middleware('guest:admin')->name('login');
+
 
 
 Route::get('/privacy', function () {
     return view('privacy');
 });
 
-
-Route::get('/', function () {
-    return view('dashboard.login');
-})->middleware('guest:admin')->name('login');
 
 
 Route::post('login',[AdminController::class,'login']);
@@ -37,7 +39,12 @@ Route::get('logout',[AdminController::class,'logout']);
 
 
 
+Route::get('test',function (){
 
+    $user = User::first();
+    $user->notify(new FcmPushNotification());
+    return 'ok';
+});
 
 
 
