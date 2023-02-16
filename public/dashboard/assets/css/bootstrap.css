@@ -12,6 +12,11 @@ File: Custom Bootstrap Css File
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+
+
+
 :root {
   --blue: #3b5de7;
   --indigo: #564ab1;
@@ -40,7 +45,7 @@ File: Custom Bootstrap Css File
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "SF UI Text", sans-serif;
+  --font-family: 'Cairo', sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 *,
@@ -60,7 +65,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "SF UI Text", sans-serif;
+    font-family: 'Cairo', sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
@@ -8602,14 +8607,8 @@ button, a {
   height: 12px; }
 
 
-body{
 
-    font-family: 'Cairo', sans-serif;
 
-}
-*{
-    font-family: 'Cairo', sans-serif;
-}
 
 .animated-progess {
   position: relative; }
@@ -8626,3 +8625,6 @@ body{
 @keyframes animate-positive {
   0% {
     width: 0; } }
+
+
+

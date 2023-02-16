@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->tinyInteger('is_reminder_vaccine')->default(1)
+                ->comment('1 => reminder is active. 0 => reminder is not active');
             $table->string('gender')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('photo')->nullable();

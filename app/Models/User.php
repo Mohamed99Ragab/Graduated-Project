@@ -28,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'oauth_token',
         'provider',
         'provider_id',
+        'is_reminder_vaccine',
     ];
 
 
@@ -42,7 +43,11 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
         'created_at',
         'updated_at',
-        'email_verified_at'
+        'email_verified_at',
+        'is_reminder_vaccine',
+        'oauth_token',
+        'provider',
+        'provider_id',
     ];
 
     /**
@@ -94,6 +99,68 @@ class User extends Authenticatable implements JWTSubject
 
 
 ############ end firebase method to push notification with this tokens ###########
+
+
+    // medical details relationship
+    public function medicalDetails(){
+
+        return $this->hasOne(MedicalDetail::class,'user_id');
+    }
+
+
+
+    // medical tests relationship
+    public function medicalTests(){
+
+        return $this->hasMany(medicalTest::class,'user_id');
+    }
+
+
+    // Perscription relationship
+    public function prescriptions(){
+
+        return $this->hasMany(Prescription::class,'user_id');
+    }
+
+
+    // Teeth Development relationship
+    public function teethDevelopments(){
+
+        return $this->hasMany(TeethDevelopment::class,'user_id');
+    }
+
+
+    // Reminder Relationship
+    public function reminders(){
+
+        return $this->hasMany(MedicationReminder::class,'user_id');
+    }
+
+    public function userTimes(){
+
+        return $this->hasManyThrough(MedicineTime::class,MedicationReminder::class,'user_id','medication_reminder_id');
+    }
+
+
+
+    // Ai Diseases Relationship
+    public function aiDiseases(){
+
+        return $this->hasMany(AiDisease::class,'user_id');
+    }
+
+
+
+    // User Vaccinations Relationship
+    public function vaccinations(){
+
+        return $this->belongsToMany(Vaccination::class,'user_vaccination','user_id','vaccination_id');
+    }
+
+
+
+
+
 
 
 

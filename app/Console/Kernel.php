@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\MedicationReminderCommand;
+use App\Console\Commands\VaccinationReminderCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,9 +15,14 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    protected $commands = [
+        MedicationReminderCommand::class,
+        VaccinationReminderCommand::class,
+    ];
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('medicine:reminder')->hourly();
+        $schedule->command('vaccine:reminder')->monthlyOn(1,'08:00');
     }
 
     /**

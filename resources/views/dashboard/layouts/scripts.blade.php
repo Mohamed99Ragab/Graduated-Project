@@ -12,7 +12,24 @@
 <script src="{{asset('dashboard/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js')}}"></script>
 
 <script src="{{asset('dashboard/assets/js/pages/dashboard.init.js')}}"></script>
+@yield('js')
+
+<!-- Chart JS -->
+<script src="{{asset('dashboard/assets/libs/chart.js/Chart.bundle.min.js')}}"></script>
+<script src="{{asset('dashboard/assets/js/pages/chartjs.init.js')}}"></script>
+
+
+
+
+
+{{--<!-- select 2 -->--}}
+{{--<script src="{{asset('dashboard/assets/libs/select2/js/select2.min.js')}}"></script>--}}
+{{--<!-- form advanced init -->--}}
+{{--<script src="{{asset('dashboard/assets/js/pages/form-advanced.init.js')}}"></script>--}}
+
+
+
 
 <script src="{{asset('dashboard/assets/js/app.js')}}"></script>
 <script src="{{asset('js/firebase.js')}}"></script>
-@yield('js')
+

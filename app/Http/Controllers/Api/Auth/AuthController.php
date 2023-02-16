@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthRequest\LoginReguest;
+use App\Http\Requests\AuthRequest\RegisterReguest;
 use App\Http\Resources\UserAuth;
 use App\Http\Traits\FilesManagement;
 use App\Models\DeviceToken;
@@ -19,14 +21,10 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function login(Request $request){
+    public function login(LoginReguest $request){
 
 
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string',
-            'fcm_token'=>'required'
-        ]);
+
 
         if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
             return response()->json(['error' => 'خطاء في بيانات الدخول'], 401);
@@ -43,20 +41,7 @@ class AuthController extends Controller
     }
 
 
-    public function register(Request $request) {
-
-         $request->validate([
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users,email',
-            'photo' =>'mimes:jpg,png|image',
-            'gender'=>'required|string|in:ذكر,انثى',
-            'birth_date'=>'required|date',
-            'password' => 'required|string|confirmed|min:6',
-             'fcm_token'=>'required'
-        ]);
-
-
-
+    public function register(RegisterReguest $request) {
 
 
         $user = User::create([

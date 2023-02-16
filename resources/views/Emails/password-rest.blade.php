@@ -4,13 +4,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Simple Transactional Email</title>
+
+    {{--  google fonts  --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
     <style>
         /* -------------------------------------
             GLOBAL RESETS
         ------------------------------------- */
 
-        /*All the styling goes here*/
 
+
+           /*All the styling goes here*/
         img {
             border: none;
             -ms-interpolation-mode: bicubic;
@@ -19,7 +28,7 @@
 
         body {
             background-color: #f6f6f6;
-            font-family: sans-serif;
+            font-family: 'Cairo', sans-serif;
             -webkit-font-smoothing: antialiased;
             font-size: 14px;
             line-height: 1.4;
@@ -35,7 +44,7 @@
             mso-table-rspace: 0pt;
             width: 100%; }
         table td {
-            font-family: sans-serif;
+            font-family: 'Cairo', sans-serif;
             font-size: 14px;
             vertical-align: top;
         }
@@ -110,7 +119,7 @@
         h3,
         h4 {
             color: #000000;
-            font-family: sans-serif;
+            font-family: 'Cairo', sans-serif;
             font-weight: 400;
             line-height: 1.4;
             margin: 0;
@@ -127,7 +136,7 @@
         p,
         ul,
         ol {
-            font-family: sans-serif;
+            font-family: 'Cairo', sans-serif;
             font-size: 14px;
             font-weight: normal;
             margin: 0;
@@ -307,7 +316,7 @@
             }
             .apple-link a {
                 color: inherit !important;
-                font-family: inherit !important;
+                font-family: 'Cairo', sans-serif;
                 font-size: inherit !important;
                 font-weight: inherit !important;
                 line-height: inherit !important;
@@ -317,7 +326,7 @@
                 color: inherit;
                 text-decoration: none;
                 font-size: inherit;
-                font-family: inherit;
+                font-family: 'Cairo', sans-serif;
                 font-weight: inherit;
                 line-height: inherit;
             }
@@ -349,25 +358,13 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hi there,</p>
-                                        <p>Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
-                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                                            <tbody>
-                                            <tr>
-                                                <td align="left">
-                                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td> <div class="badge badge-success">{{$code}}</div> </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                                        <p>Good luck! Hope it works.</p>
+                                        <p style="font-family: 'Cairo', sans-serif;">مرحبا بك,</p>
+                                        <h2>لقد تلقينا طلبك لإعادة تعيين كلمة مرور حسابك.</h2>
+
+                                        <p>يمكنك استخدام الكود التالي لاستعادة حسابك:</p>
+                                        <strong class="text-success">{{$code}}</strong>
+                                        <br><br>
+                                        <p>المدة المسموح بها للرمز هي ساعة واحدة من وقت إرسال الرسالة</p>
                                     </td>
                                 </tr>
                             </table>
@@ -383,13 +380,16 @@
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                         <tr>
                             <td class="content-block">
-                                <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                                <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                                <span class="apple-link">منصة الرعاية الصحية للاطفال</span>
+                                <br> للتواصل مع الدعم <a href="tel:+201017309597">اتصل الان</a>.
                             </td>
                         </tr>
                         <tr>
                             <td class="content-block powered-by">
-                                Powered by <a href="http://htmlemail.io">HTMLemail</a>.
+                                تم الانشاء <a href="https://baby-health-care.sonicar.tech/">2023</a>.
+                            </td>
+                            <td class="content-block powered-by">
+                                <a href="https://baby-health-care.sonicar.tech/">https://baby-health-care.sonicar.tech</a>
                             </td>
                         </tr>
                     </table>
@@ -401,5 +401,8 @@
         <td>&nbsp;</td>
     </tr>
 </table>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </body>
 </html>

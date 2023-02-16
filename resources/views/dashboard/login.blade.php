@@ -16,15 +16,35 @@
     <link href="{{asset('dashboard/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{asset('dashboard/assets/css/app-rtl.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    {{--  google fonts  --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
 
+    <style>
+        body{
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
 </head>
 
 <body>
+
+
 <div class="home-btn d-none d-sm-block">
     <a href="{{route('dashboard')}}" class="text-dark"><i class="fas fa-home h2"></i></a>
 </div>
 <div class="account-pages my-5 pt-sm-5">
     <div class="container">
+
+        @if(session()->has('error'))
+
+                {{session()->get('error')}}
+
+        @endif
+
+
+
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
                 <div class="card overflow-hidden">
@@ -61,6 +81,9 @@
                                     <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">تسجيل دخول</button>
                                 </div>
 
+                                <div class="mt-4 text-center">
+                                    <a href="{{route('password.forget')}}" class="text-muted"><i class="mdi mdi-lock mr-1"></i> هل نسيت كلمة المرور ؟</a>
+                                </div>
 
                             </form>
                         </div>
@@ -68,7 +91,7 @@
                     </div>
                 </div>
                 <div class="mt-5 text-center">
-                    <p>© 2020 Qovex. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                    <p>© 2023 Baby health care <i class="mdi mdi-heart text-danger"></i> by Elgwile</p>
                 </div>
 
             </div>

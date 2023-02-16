@@ -15,18 +15,16 @@ use NotificationChannels\Fcm\Resources\ApnsConfig;
 use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 
 
-class FcmPushNotification extends Notification
+class VaccinationReminderNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $title;
+    public $body;
+    public function __construct($title,$body)
     {
-        //
+        $this->title = $title;
+        $this->body = $body;
     }
 
     /**
@@ -37,7 +35,7 @@ class FcmPushNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [FcmChannel::class];
+        return [FcmChannel::class,'database'];
     }
 
 
@@ -45,11 +43,12 @@ class FcmPushNotification extends Notification
     public function toFcm($notifiable)
     {
         return FcmMessage::create()
-            ->setData(['data1' => 'value', 'data2' => 'value2'])
+//            ->setData(['data1' => 'value', 'data2' => 'value2'])
             ->setNotification(\NotificationChannels\Fcm\Resources\Notification::create()
-                ->setTitle('Account Activated')
-                ->setBody('Your account has been activated.')
-                ->setImage('http://example.com/url-to-image-here.png'))
+                ->setTitle($this->title)
+                ->setBody($this->body)
+//                ->setImage('http://example.com/url-to-image-here.png')
+                )
             ->setAndroid(
                 AndroidConfig::create()
                     ->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
@@ -63,10 +62,11 @@ class FcmPushNotification extends Notification
 
 
 
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
-            //
+            'title'=>$this->title,
+            'body'=>$this->body
         ];
     }
 }

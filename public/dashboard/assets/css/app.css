@@ -7,6 +7,7 @@ Contact: themesbrand@gmail.com
 File: Main Css File
 */
 @import url("https://fonts.cdnfonts.com/css/sf-ui-text-2");
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
 #page-topbar {
   position: fixed;
   top: 0;
@@ -974,10 +975,10 @@ body[data-layout="detached"] .page-title-box {
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 .waves-effect {
   position: relative;
@@ -2764,3 +2765,9 @@ input[switch="dark"]:checked + label {
     left: 0px;
     right: 0px;
     top: 12px; }
+
+
+*{
+
+    font-family: 'Cairo', sans-serif;
+}

@@ -49,7 +49,7 @@ class SocialAuthController extends Controller
             $authenticatedUser = User::create([
                 'email' => $user->email,
                 'name' => $user->name,
-                'photo'=>null,
+                'photo'=>'Sleeping_on_the_moon.jpg',
                 'birth_date'=>null,
                 'gender'=>null,
                 'password'=>null,

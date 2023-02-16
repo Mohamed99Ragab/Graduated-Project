@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthRequest\UpdateProfileRequest;
 use App\Http\Traits\FilesManagement;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,35 +15,33 @@ class UpdateProfile extends Controller
 {
 
     use FilesManagement;
-    public function update(Request $request,$id){
-
-        $request->validate([
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users,email,'.$id,
-            'photo' =>'mimes:jpg,png|image',
-            'gender'=>'required|string|in:ذكر,انثى',
-            'birth_date'=>'required|date',
-            'password' => 'string|min:6',
-        ]);
+    public function update(UpdateProfileRequest $request){
 
 
-        $user = User::find($id);
+       
 
-       if($user !=null){
+
+        $user = User::find(Auth::guard('api')->id());
+
+       if(isset($user) & !empty($user)){
+
+
+
+           // make update new data
+           $user->name = $request->name;
+           $user->email = $request->email;
+           $user->gender = $request->gender;
+           $user->birth_date = $request->birth_date;
 
            // romove last photo
            if($request->hasFile('photo')){
-               Storage::disk('images')->delete('users/'.$user->photo);
-           }
 
-           $user->update([
-               'name'=> $request->name,
-               'email'=>$request->email,
-               'gender'=>$request->gender,
-               'birth_date'=>$request->birth_date,
-               //save image path in database with check if request file
-               'photo'=>$request->file('photo') ? $request->file('photo')->hashName():null
-           ]);
+               Storage::disk('images')->delete('users/'.$user->photo);
+               $user->photo = $request->file('photo')->hashName();
+           }
+           $user->save();
+
+
 
            if(!empty($request->password)){
                $user->update([

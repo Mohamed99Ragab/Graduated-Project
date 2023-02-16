@@ -6,8 +6,9 @@ Website: https://themesbrand.com/
 Contact: themesbrand@gmail.com
 File: Main RTL Css File
 */
-@import url("https://fonts.cdnfonts.com/css/sf-ui-text-2");
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500&display=swap');
+/*@import url("https://fonts.cdnfonts.com/css/sf-ui-text-2");*/
+/*@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
 #page-topbar {
   position: fixed;
   top: 0;
@@ -339,7 +340,7 @@ body[data-layout="horizontal"] .footer {
             transform: rotate(-180deg); }
   #sidebar-menu .has-arrow:after {
     content: "\F140";
-    font-family: 'Material Design Icons';
+      font-family: 'Cairo', sans-serif;
     display: block;
     float: right;
     -webkit-transition: -webkit-transform .2s;
@@ -1950,7 +1951,7 @@ input[switch] {
       color: #343a40;
       content: attr(data-off-label);
       display: block;
-      font-family: inherit;
+      font-family: 'Cairo', sans-serif;
       font-weight: 500;
       font-size: 12px;
       line-height: 21px;
@@ -2294,7 +2295,7 @@ input[switch="dark"]:checked + label {
     outline: none; }
   .table-rep-plugin .checkbox-row input[type="checkbox"]:checked + label::after {
     content: "\f00c";
-    font-family: 'Font Awesome 5 Free';
+      font-family: 'Cairo', sans-serif;
     font-weight: 900; }
   .table-rep-plugin .checkbox-row input[type="checkbox"]:disabled + label::before {
     background-color: #f8f9fa;
@@ -2340,7 +2341,7 @@ input[switch="dark"]:checked + label {
 
 .glyphicon {
   display: inline-block;
-  font-family: "Material Design Icons";
+    font-family: 'Cairo', sans-serif;
   font-size: inherit;
   font-weight: 600;
   font-style: inherit; }
@@ -2361,14 +2362,14 @@ input[switch="dark"]:checked + label {
 .apex-charts {
   min-height: 10px !important; }
   .apex-charts text {
-    font-family: "SF UI Text", sans-serif !important;
+      font-family: 'Cairo', sans-serif;
     fill: #adb5bd; }
   .apex-charts .apexcharts-canvas {
     margin: 0 auto; }
 
 .apexcharts-tooltip-title,
 .apexcharts-tooltip-text {
-  font-family: "SF UI Text", sans-serif !important; }
+    font-family: 'Cairo', sans-serif; }
 
 .apexcharts-legend-series {
   font-weight: 500; }
@@ -2379,7 +2380,7 @@ input[switch="dark"]:checked + label {
 
 .apexcharts-legend-text {
   color: #8687a7 !important;
-  font-family: "SF UI Text", sans-serif !important;
+    font-family: 'Cairo', sans-serif; !important;
   font-size: 13px !important; }
 
 .apexcharts-pie-label {
@@ -2387,7 +2388,7 @@ input[switch="dark"]:checked + label {
 
 .apexcharts-yaxis text,
 .apexcharts-xaxis text {
-  font-family: "SF UI Text", sans-serif !important;
+    font-family: 'Cairo', sans-serif; !important;
   fill: #adb5bd; }
 
 /* Flot chart */
@@ -2422,7 +2423,7 @@ input[switch="dark"]:checked + label {
   color: #eff2f7 !important;
   font-size: 12px !important;
   line-height: 18px !important;
-  font-family: "SF UI Text", sans-serif !important;
+    font-family: 'Cairo', sans-serif; !important;
   font-weight: 500 !important; }
 
 .gmaps, .gmaps-panaroma {
@@ -2461,7 +2462,7 @@ input[switch="dark"]:checked + label {
   border: none;
   background: #343a40;
   color: #f8f9fa;
-  font-family: "SF UI Text", sans-serif;
+    font-family: 'Cairo', sans-serif;
   font-size: 0.875rem;
   padding: 5px 8px; }
 
@@ -2652,7 +2653,7 @@ input[switch="dark"]:checked + label {
       top: 0; }
       .message-list .checkbox-wrapper-mail label:before {
         content: "\F12C";
-        font-family: "Material Design Icons";
+          font-family: 'Cairo', sans-serif;
         top: 0;
         height: 20px;
         color: #292d32;
@@ -4692,35 +4693,13 @@ input[type=checkbox].tui-full-calendar-checkbox-round + span {
   left: 25px;
   right: auto; }
 
-*{
-    font-family: 'Cairo', sans-serif;
-}
-
 body{
 
     font-family: 'Cairo', sans-serif;
-
 }
 
-p{
-    font-family: 'Cairo', sans-serif;
-}
-h1{
-    font-family: 'Cairo', sans-serif;
-}
-h2{
-    font-family: 'Cairo', sans-serif;
-}
 
-h3{
-    font-family: 'Cairo', sans-serif;
-}
 
-h4{
-    font-family: 'Cairo', sans-serif;
-}
 
-h5{
-    font-family: 'Cairo', sans-serif;
-}
+
 
