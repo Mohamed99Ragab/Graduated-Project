@@ -50,7 +50,7 @@ class MedicationReminderCommand extends Command
                 $reminder = $userTime->reminder;
                 if ($reminder->end_date != date_format(Carbon::now(),'Y-m-d')){
 
-                    if (date_format(Carbon::parse($userTime->time), 'h') == date_format(Carbon::now(),'h')){
+                    if (date_format(Carbon::parse($userTime->time), 'h:i') == date_format(Carbon::now(),'h:i')){
                         $user->notify(new MedicationReminderNotification('تذكير موعد العلاج'," موعد اخذ الدواء ".$reminder->medicine_name." الان"));
                     }
                 }

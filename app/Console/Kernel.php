@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
     ];
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('medicine:reminder')->hourly();
+         $schedule->command('medicine:reminder')->everyMinute();
         $schedule->command('vaccine:reminder')->monthlyOn(1,'08:00');
     }
 
