@@ -55,12 +55,12 @@ class QuestionController extends Controller
 
             }
 
-            toastr()->success('تم تحديث البيانات بنجاح');
+            session()->flash('success','تم حفظ البيانات بنجاح');
             return back();
         }
 
         catch (\Exception $e){
-            toastr()->error($e->getMessage(),'حدث خطاء ما');
+            session()->flash('error','حدث خطاء ما');
             return back();
         }
 
@@ -99,7 +99,8 @@ class QuestionController extends Controller
             'age_stage'=>$request->age_stage,
         ]);
 
-        toastr()->success('البيانات بنجاح','تم تحديث');
+        session()->flash('success','تم تحديث البيانات بنجاح');
+
         return back();
     }
 
@@ -108,7 +109,7 @@ class QuestionController extends Controller
     {
         Question::destroy($id);
 
-        toastr()->success('البيانات بنجاح','تم حذف');
+        session()->flash('success','تم حذف السؤال بنجاح');
         return back();
     }
 }

@@ -61,7 +61,8 @@ class VaccinationController extends Controller
         $this->uploadImage($request->file('image'),'vaccinations','images');
 
 
-        toastr()->success('التطعيم بنجاح','تم اضافة');
+        session()->flash('success','تم اضافة التطعيم بنجاح');
+
 
         return back();
 
@@ -125,7 +126,8 @@ class VaccinationController extends Controller
         $this->uploadImage($request->file('image'),'vaccinations','images');
 
 
-        toastr()->success('البيانات بنجاح','تم تحديث');
+        session()->flash('success','تم تحديث البيانات بنجاح');
+
 
         return redirect()->route('vaccinations.index');
     }
@@ -135,7 +137,8 @@ class VaccinationController extends Controller
     {
         Vaccination::destroy($id);
 
-        toastr()->success('التطعيم بنجاح','تم حذف');
+        session()->flash('success','تم حذف التطعيم بنجاح');
+
         return back();
     }
 }

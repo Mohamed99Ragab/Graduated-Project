@@ -32,6 +32,12 @@ class TipsController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'question_ids'=>'required|array',
+            'description'=>'required'
+
+        ]);
+
         $question_ids = $request->question_ids;
         $description = $request->description;
 
@@ -47,7 +53,8 @@ class TipsController extends Controller
         $tips->questions()->sync($question_ids);
 
 
-        toastr()->success('تم حفظ البيانات');
+        session()->flash('success','تم حفظ البيانات بنجاح');
+
         return redirect()->route('tips.index');
 
 
@@ -94,7 +101,8 @@ class TipsController extends Controller
         $tip->questions()->sync($question_ids);
 
 
-        toastr()->success('البيانات بنجاح','تم تحديث');
+        session()->flash('success','تم تحديث البيانات بنجاح');
+
         return redirect()->route('tips.index');
 
 
@@ -105,7 +113,7 @@ class TipsController extends Controller
     {
         Tips::destroy($id);
 
-        toastr()->success('تم الحدف بنجاح');
+        session()->flash('success','تم الحدف  بنجاح');
         return back();
     }
 }

@@ -36,7 +36,8 @@ class SubjectController extends Controller
         ]);
 
 
-        toastr()->success('تم اضافة الموضوع بنجاح');
+
+        session()->flash('success','تم اضافة الموضوع بنجاح');
         return back();
 
 
@@ -72,7 +73,7 @@ class SubjectController extends Controller
 
 
 
-        toastr()->success('تم تحديث البيانات بنجاح');
+        session()->flash('success','تم تحديث البيانات بنجاح');
         return back();
     }
 
@@ -81,7 +82,7 @@ class SubjectController extends Controller
     {
         Subject::destroy($id);
 
-        toastr()->success('تم الحدف بنجاح');
+        session()->flash('success','تم حدف الموضوع بنجاح');
         return back();
     }
 }
