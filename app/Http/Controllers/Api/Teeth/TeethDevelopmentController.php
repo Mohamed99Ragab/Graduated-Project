@@ -51,6 +51,12 @@ class TeethDevelopmentController extends Controller
 
         try {
 
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
+
+
 
             //get birthdate of user
             $user = User::find(Auth::guard('api')->id());
@@ -92,6 +98,11 @@ class TeethDevelopmentController extends Controller
         try {
 
 
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
+
             //get birthdate of user
             $user = User::find(Auth::guard('api')->id());
 
@@ -115,7 +126,7 @@ class TeethDevelopmentController extends Controller
                     'age_in_days'=>$ages['days'],
                 ]);
 
-                return $this->responseJson($teeth,'تم تعديل البيانات بنجاح',true);
+                return $this->responseJson(null,'تم تعديل البيانات بنجاح',true);
 
             }
 

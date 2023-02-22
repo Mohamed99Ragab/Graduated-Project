@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\DevelopmentFollow;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DevelopmentFollow\TipsRequest;
 use App\Http\Resources\QuestionSelectedResource;
 use App\Http\Resources\QuestionSubjectResource;
 use App\Http\Resources\TipsResource;
@@ -40,14 +41,17 @@ class QuestionsController extends Controller
 
 
 
-    public function create_tips(Request $request){
+    public function create_tips(TipsRequest $request){
 
 
             $answers = $request->answers;
 
         try {
 
+            if (isset($request->validator) && $request->validator->fails()) {
 
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
 
 
 
@@ -129,12 +133,19 @@ class QuestionsController extends Controller
 
     }
 
-    public function update_tips(Request $request){
+    public function update_tips(TipsRequest $request){
 
 
         $answers = $request->answers;
 
         try {
+
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
+
+
 
 
             $questions_ids = [];

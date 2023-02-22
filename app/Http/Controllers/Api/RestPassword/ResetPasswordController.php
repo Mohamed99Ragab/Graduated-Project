@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\RestPassword;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthRequest\RestPasswordRequest;
+use App\Http\Traits\HttpResponseJson;
 use App\Models\ResetCodePassword;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,12 +12,17 @@ use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    public function __invoke(Request $request)
+    use HttpResponseJson;
+
+    public function __invoke(RestPasswordRequest $request)
     {
-        $request->validate([
-            'code' => 'required|string|exists:reset_code_passwords,code',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+
+        if (isset($request->validator) && $request->validator->fails()) {
+
+            return $this->responseJson(null,$request->validator->messages(),false);
+        }
+
+
 
         // find the code
         $passwordReset = ResetCodePassword::firstWhere('code', $request->code);
@@ -23,7 +30,7 @@ class ResetPasswordController extends Controller
         // check if it does not expired: the time is one hour
         if ($passwordReset->created_at > now()->addHour()) {
             $passwordReset->delete();
-            return response()->json(['message' => 'انتهت صلاحية رمز التحقق'], 422);
+            return $this->responseJson(null,'انتهت صلاحية رمز التحقق',false);
         }
 
         // find user's email
@@ -37,6 +44,6 @@ class ResetPasswordController extends Controller
         // delete current code
         $passwordReset->delete();
 
-        return response(['message' =>'تم إعادة تعيين كلمة المرور بنجاح'], 200);
+        return $this->responseJson(null,'تم إعادة تعيين كلمة المرور بنجاح',true);
     }
 }

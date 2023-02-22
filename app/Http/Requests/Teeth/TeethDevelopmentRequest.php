@@ -38,4 +38,10 @@ class TeethDevelopmentRequest extends FormRequest
             'apperance_date.date'=>'هذا التاريخ ليس صحيحا'
         ];
     }
+
+    public $validator = null;
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $this->validator = $validator;
+    }
 }

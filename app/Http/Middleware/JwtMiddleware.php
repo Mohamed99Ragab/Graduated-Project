@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Traits\HttpResponseJson;
 use Closure;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -9,6 +10,7 @@ use Exception;
 
 class JwtMiddleware
 {
+    use HttpResponseJson;
     /**
      * Handle an incoming request.
      *
@@ -22,11 +24,12 @@ class JwtMiddleware
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
-                return response()->json(['status' => 'توكن غير صالح']);
+                return $this->responseJson(null,'توكن غير صحيح',false);
+
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-                return response()->json(['status' => 'انتهت صلاحية التوكن']);
+                return $this->responseJson(null,'انتهت صلاحية التوكن',false);
             }else{
-                return response()->json(['status' => 'يجب تسجيل الدخول اولا']);
+                return $this->responseJson(null,'يجب تسجيل الدخول اولا',false);
             }
         }
         return $next($request);

@@ -2,10 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Traits\ChildTrait;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class UserVaccinationResource extends JsonResource
 {
+    use ChildTrait;
     /**
      * Transform the resource into an array.
      *
@@ -21,13 +26,22 @@ class UserVaccinationResource extends JsonResource
         }
 
 
+
+
+
+        $proposed_vaccination_date = date_format(Carbon::now()->addMonths($this->vaccine_age),'Y-m-d');
+
+
+
+
+
         return [
             'id'=>$this->id,
             'name'=>$this->name,
             'vaccine_age'=>$this->vaccine_age,
             'prevention'=>$this->disease_prevention,
             'status'=>!empty($user_vac) ? 1 :0,
-
+            'proposed_vaccination_date'=>$proposed_vaccination_date
 
         ];
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\AuthRequest;
+namespace App\Http\Requests\DevelopmentFollow;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginReguest extends FormRequest
+class TipsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +24,17 @@ class LoginReguest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string',
-            'fcm_token'=>'required'
+            'answers.*.question_id'=>'required',
+            'answers.*.status'=>'required|in:0,1',
         ];
     }
-
 
     public function messages()
     {
         return [
-            'email.required'=>'يرجي ادخال الايميل',
-            'email.email'=>'يجب ان يكون هذا الحقل من نوع ايميل',
-            'email.exists'=>'هذا الايميل غير موجود الرجاء عمل حساب اولا',
-            'password.required'=>'يرجى ادخال كلمة المرور اولا',
-            'fcm_token'=>'هذا الحقل مطلوب'
+            'answers.*.question_id.required'=>'معرف السؤال مطلوب',
+            'answers.*.status.required'=>'حالة السؤال مطلوبة',
+            'answers.*.status.in'=>'عذرا يجب ان تكون حالة السؤال فقط 1,0',
 
         ];
     }
@@ -48,6 +44,4 @@ class LoginReguest extends FormRequest
     {
         $this->validator = $validator;
     }
-
-
 }

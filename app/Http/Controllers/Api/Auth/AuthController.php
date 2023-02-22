@@ -7,27 +7,35 @@ use App\Http\Requests\AuthRequest\LoginReguest;
 use App\Http\Requests\AuthRequest\RegisterReguest;
 use App\Http\Resources\UserAuth;
 use App\Http\Traits\FilesManagement;
+use App\Http\Traits\HttpResponseJson;
 use App\Models\DeviceToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+use PHPUnit\Exception;
+
 
 class AuthController extends Controller
 {
-    use FilesManagement;
+    use FilesManagement , HttpResponseJson;
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function login(LoginReguest $request){
 
+        if (isset($request->validator) && $request->validator->fails()) {
 
+            return $this->responseJson(null,$request->validator->messages(),false);
+        }
 
 
         if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
-            return response()->json(['error' => 'خطاء في بيانات الدخول'], 401);
+
+            return $this->responseJson(null,'خطاء في بيانات الدخول',false);
         }
 
         // add devive token to user
@@ -44,39 +52,66 @@ class AuthController extends Controller
     public function register(RegisterReguest $request) {
 
 
-        $user = User::create([
-            'name'=> $request->name,
-            'email'=>$request->email,
-            'gender'=>$request->gender,
-            'birth_date'=>$request->birth_date,
-            'password'=>Hash::make($request->password),
+        DB::beginTransaction();
 
-            //save image path in database with check if request file
-            'photo'=>$request->file('photo') ? $request->file('photo')->hashName():null
+        try {
+
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
+
+
+
+            $user = User::create([
+                'name'=> $request->name,
+                'email'=>$request->email,
+                'gender'=>$request->gender,
+                'birth_date'=>$request->birth_date,
+                'password'=>Hash::make($request->password),
+
+                //save image path in database with check if request file
+                'photo'=>$request->file('photo') ? $request->file('photo')->hashName():null
             ]);
 
-        //to upload photo on server
-        $this->uploadImage($request->file('photo'),'users','images');
+            //to upload photo on server
+            $this->uploadImage($request->file('photo'),'users','images');
 
 
 
-        if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
-            return response()->json(['error' => 'خطاء في عملية الدخول'], 401);
+            if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
+
+                return $this->responseJson(null,'خطاء في عملية الدخول',false);
+            }
+
+            // add devive token to user
+            DeviceToken::create([
+                'token' => $request->fcm_token,
+                'user_id' => Auth::guard('api')->id()
+            ]);
+
+            DB::commit();
+            return $this->createNewToken($token);
+
+
         }
 
-        // add devive token to user
-        DeviceToken::create([
-            'token' => $request->fcm_token,
-            'user_id' => Auth::guard('api')->id()
-        ]);
+        catch (\Exception $e){
 
-        return $this->createNewToken($token);
+            DB::rollback();
+            return $this->responseJson($e->getMessage(),'الرجاء المحاوالة مرة اخرى',false);
+        }
+
+
+
+
 
     }
 
     public function logout() {
         auth()->logout();
-        return response()->json(['message' => 'تم تسجيل الخروج بنجاح']);
+        return $this->responseJson(null,'تم تسجيل الخروج بنجاح',true);
+
     }
 
     public function refresh() {
@@ -88,11 +123,14 @@ class AuthController extends Controller
     }
 
     protected function createNewToken($token){
-        return response()->json([
+
+
+        return $this->responseJson([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => new UserAuth(auth()->user())
-        ]);
+        ],null,true);
+
+
     }
 }

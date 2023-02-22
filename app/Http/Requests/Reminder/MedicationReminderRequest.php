@@ -49,4 +49,10 @@ class MedicationReminderRequest extends FormRequest
             'mediceTimes.*.time.required'=>'يرجى تحديد الوقت الخاص بالدواء',
         ];
     }
+
+    public $validator = null;
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $this->validator = $validator;
+    }
 }

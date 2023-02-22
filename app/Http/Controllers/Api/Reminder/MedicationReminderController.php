@@ -62,12 +62,16 @@ class MedicationReminderController extends Controller
     public function store_reminder(MedicationReminderRequest $request){
 
 
-
         DB::beginTransaction();
         $mediceTimes = $request->mediceTimes;
 
         try {
 
+
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
 
 
             $reminder = MedicationReminder::create([
@@ -121,6 +125,12 @@ class MedicationReminderController extends Controller
 //        return $mediceTimes;
 
         try {
+
+
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
 
 
             $reminder = MedicationReminder::find($reminder_id);

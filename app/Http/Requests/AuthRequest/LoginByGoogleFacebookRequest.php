@@ -4,7 +4,7 @@ namespace App\Http\Requests\AuthRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginReguest extends FormRequest
+class LoginByGoogleFacebookRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,30 +24,29 @@ class LoginReguest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string',
+            'oauth_token'=>'required|string',
+            'provider'=>'required|string|in:google,facebook',
             'fcm_token'=>'required'
         ];
     }
 
 
+
     public function messages()
     {
         return [
-            'email.required'=>'يرجي ادخال الايميل',
-            'email.email'=>'يجب ان يكون هذا الحقل من نوع ايميل',
-            'email.exists'=>'هذا الايميل غير موجود الرجاء عمل حساب اولا',
-            'password.required'=>'يرجى ادخال كلمة المرور اولا',
-            'fcm_token'=>'هذا الحقل مطلوب'
-
+            'oauth_token.required'=>'يرجى ادخال oauth token',
+            'provider.required'=>'يجب تحديد نوع التسجيل',
+            'provider.in'=>'يجب ان يكون نوع التسجيل عن طريق google , facebook فقط',
+            'fcm_token.required'=>'fcm token يرجي ادخال '
         ];
     }
+
 
     public $validator = null;
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         $this->validator = $validator;
     }
-
 
 }

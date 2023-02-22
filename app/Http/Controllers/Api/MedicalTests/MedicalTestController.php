@@ -58,6 +58,11 @@ class MedicalTestController extends Controller
 
         try {
 
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
+
             medicalTest::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'lab_name'=>$request->lab_name,
@@ -88,6 +93,14 @@ class MedicalTestController extends Controller
 
     public function update_medical_test(UpdateMedicalTestRequest $request,$test_id){
 
+
+        if (isset($request->validator) && $request->validator->fails()) {
+
+            return $this->responseJson(null,$request->validator->messages(),false);
+        }
+
+
+
 //        return $request;
         $medical_test  = medicalTest::find($test_id);
         if (isset($medical_test)){
@@ -109,7 +122,7 @@ class MedicalTestController extends Controller
           $medical_test->save();
 
             $medical_test_res = new MedicalTestsResource($medical_test);
-         return $this->responseJson($medical_test_res,'تم تعديل البيانات بنجاح',true);
+         return $this->responseJson(null,'تم تعديل البيانات بنجاح',true);
 
         }
         return $this->responseJson(null,'هذا التحليل الذى تحاول تعديله غير موجود',false);

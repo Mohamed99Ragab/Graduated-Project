@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\AI;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAiDiseaseRequest;
 use App\Http\Resources\AiDiseaseResource;
 use App\Http\Traits\FilesManagement;
 use App\Http\Traits\HttpResponseJson;
@@ -30,9 +31,14 @@ class AiDiseaseController extends Controller
         }
 
 
-    public function store_ai_disease(Request $request){
+    public function store_ai_disease(StoreAiDiseaseRequest $request){
 
         try {
+
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
 
             AiDisease::create([
                 'user_id'=>Auth::guard('api')->id(),

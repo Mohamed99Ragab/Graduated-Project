@@ -62,6 +62,11 @@ class PrescriptionController extends Controller
 
         try {
 
+            if (isset($request->validator) && $request->validator->fails()) {
+
+                return $this->responseJson(null,$request->validator->messages(),false);
+            }
+
             Prescription::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'note'=>$request->note,
@@ -91,7 +96,14 @@ class PrescriptionController extends Controller
 
     public function update_prescription(UpdatePrescriptionRequest $request,$prescription_id){
 
-//        return $request;
+
+
+        if (isset($request->validator) && $request->validator->fails()) {
+
+            return $this->responseJson(null,$request->validator->messages(),false);
+        }
+
+
         $prescription  = Prescription::find($prescription_id);
         if (isset($prescription)){
 

@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\AuthRequest;
 
+use App\Http\Traits\HttpResponseJson;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterReguest extends FormRequest
 {
+    use HttpResponseJson;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,7 +31,7 @@ class RegisterReguest extends FormRequest
             'email' => 'required|string|email|unique:users,email',
             'photo' => 'mimes:jpg,png,jpeg|image',
             'gender' => 'required|string|in:ذكر,انثى',
-            'birth_date' => 'required|date|date_format:Y-m-d',
+            'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
             'password' => 'required|string|confirmed|min:8',
             'fcm_token' => 'required'
         ];
@@ -50,10 +53,25 @@ class RegisterReguest extends FormRequest
             'gender.in' => 'يجب ان يكون النوع ذكر او انثى',
             'birth_date.required' => 'يرجى تحديد تاريخ ميلاد الطفل',
             'birth_date.date_format' => 'يجب ان يكون تاريخ الميلاد بهذا الصيغة 12-02-2005',
+            'birth_date.before' => 'عذرا لا يمكن ان يكون تاريخ الميلاد قبل اليوم',
             'photo.mimes' => 'نوع الصورة المرفقة يجب ان تكون بهذا الصيغ ,jpeg,png,jpg',
             'photo.image' => 'يجب ان يكون الملف المرفق صورة وليس شيء اخر',
             'fcm_token' => 'هذا الحقل مطلوب'
 
         ];
     }
+
+
+    public $validator = null;
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $this->validator = $validator;
+    }
+
+
+
+
+
+
+
 }

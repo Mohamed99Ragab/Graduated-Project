@@ -4,7 +4,7 @@ namespace App\Http\Requests\AuthRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginReguest extends FormRequest
+class RestPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class LoginReguest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string',
-            'fcm_token'=>'required'
+            'code' => 'required|string|exists:reset_code_passwords,code',
+            'password' => 'required|string|min:8|confirmed',
         ];
     }
 
@@ -34,20 +33,18 @@ class LoginReguest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'=>'يرجي ادخال الايميل',
-            'email.email'=>'يجب ان يكون هذا الحقل من نوع ايميل',
-            'email.exists'=>'هذا الايميل غير موجود الرجاء عمل حساب اولا',
-            'password.required'=>'يرجى ادخال كلمة المرور اولا',
-            'fcm_token'=>'هذا الحقل مطلوب'
-
+            'code.required' => 'يرجي ادخال الكود المرسل على الايميل',
+            'code.exists'=>'هذا الكود غير صحيح',
+            'password.required' => 'يرجى ادخال كلمة مرور جديدة',
+            'password.min' => 'يجب الا يقل الباسورد عن 8 احرف',
+            'password.confirmed' => 'يجب ان يتطابق حقل تاكيد الباسورد مع الباسورد',
         ];
     }
+
 
     public $validator = null;
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         $this->validator = $validator;
     }
-
-
 }

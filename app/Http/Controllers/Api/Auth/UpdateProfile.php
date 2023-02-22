@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest\UpdateProfileRequest;
 use App\Http\Traits\FilesManagement;
+use App\Http\Traits\HttpResponseJson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +15,15 @@ use Illuminate\Support\Facades\Storage;
 class UpdateProfile extends Controller
 {
 
-    use FilesManagement;
+    use FilesManagement , HttpResponseJson;
     public function update(UpdateProfileRequest $request){
 
 
-       
+        if (isset($request->validator) && $request->validator->fails()) {
+
+            return $this->responseJson(null,$request->validator->messages(),false);
+
+        }
 
 
         $user = User::find(Auth::guard('api')->id());
@@ -53,12 +58,13 @@ class UpdateProfile extends Controller
            //to upload new photo on server
            $this->uploadImage($request->file('photo'),'users','images');
 
-           return response()->json(['message'=>'تم التعديل بنجاح'],200);
+           return $this->responseJson(null,'تم التعديل بنجاح',true);
 
        }
        else{
 
-           return response()->json(['message'=>'يجب تسجيل الدخول اولا']);
+           return $this->responseJson(null,'يجب تسجيل الدخول اولا',false);
+
 
        }
 
