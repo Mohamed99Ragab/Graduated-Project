@@ -22,7 +22,7 @@ class AuthController extends Controller
 {
     use FilesManagement , HttpResponseJson;
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register','logout']]);
     }
 
     public function login(LoginReguest $request){
@@ -109,8 +109,13 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        auth()->logout();
-        return $this->responseJson(null,'تم تسجيل الخروج بنجاح',true);
+
+        if(!empty(Auth::guard('api')->user())){
+            auth()->logout();
+            return $this->responseJson(null,'تم تسجيل الخروج بنجاح',true);
+        }
+
+        return $this->responseJson(null,'يجب تسجيل الدخول اولا لتمكن من تسجيل الخروج',false);
 
     }
 

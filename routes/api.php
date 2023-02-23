@@ -61,6 +61,7 @@ Route::group([
 Route::group(['middleware'=>'jwt.verify'],function (){
 
 
+
     // update profile
     Route::post('update-profile',[UpdateProfile::class,'update']);
 

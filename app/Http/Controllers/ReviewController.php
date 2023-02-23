@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\ReviewsNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewController extends Controller
 {
@@ -41,9 +42,24 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'review'=>'required|numeric'
-        ]);
+        ];
+
+        $messages = [
+            'review.required' => 'يرجى تحديد التقييم',
+            'review.numeric'=>'يجب ارسال التقييم كقيمة رقمية وليس نصية'
+        ];
+
+        $validator = Validator::make($request->all(),$rules,$messages);
+
+        if($validator->fails())
+        {
+            return $this->responseJson(null,$validator->errors(),false);
+        }
+
+
+
 
         $review = Review::create([
             'message'=>$request->message,
