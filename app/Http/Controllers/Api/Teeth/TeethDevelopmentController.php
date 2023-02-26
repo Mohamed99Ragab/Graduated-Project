@@ -51,13 +51,6 @@ class TeethDevelopmentController extends Controller
 
         try {
 
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
-
-
-
             //get birthdate of user
             $user = User::find(Auth::guard('api')->id());
 
@@ -96,12 +89,6 @@ class TeethDevelopmentController extends Controller
     public function update_teeth_dev(TeethDevelopmentRequest $request,$teeth_id){
 
         try {
-
-
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
 
             //get birthdate of user
             $user = User::find(Auth::guard('api')->id());

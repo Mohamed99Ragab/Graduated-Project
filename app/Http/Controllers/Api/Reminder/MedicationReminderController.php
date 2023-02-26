@@ -67,13 +67,6 @@ class MedicationReminderController extends Controller
 
         try {
 
-
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
-
-
             $reminder = MedicationReminder::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'medicine_name'=>$request->medicine_name,
@@ -125,13 +118,6 @@ class MedicationReminderController extends Controller
 //        return $mediceTimes;
 
         try {
-
-
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
-
 
             $reminder = MedicationReminder::find($reminder_id);
 

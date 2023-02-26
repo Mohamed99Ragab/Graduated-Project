@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Traits\HttpResponseJson;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreMedicalDetailsRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    use HttpResponseJson;
     public function authorize()
     {
         return true;
@@ -53,10 +50,6 @@ class StoreMedicalDetailsRequest extends FormRequest
     }
 
 
-    public $validator = null;
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        $this->validator = $validator;
-    }
+
 
 }

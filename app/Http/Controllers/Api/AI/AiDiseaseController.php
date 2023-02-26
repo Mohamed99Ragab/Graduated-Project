@@ -35,10 +35,7 @@ class AiDiseaseController extends Controller
 
         try {
 
-            if (isset($request->validator) && $request->validator->fails()) {
 
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
 
             AiDisease::create([
                 'user_id'=>Auth::guard('api')->id(),

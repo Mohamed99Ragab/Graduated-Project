@@ -27,10 +27,7 @@ class AuthController extends Controller
 
     public function login(LoginReguest $request){
 
-        if (isset($request->validator) && $request->validator->fails()) {
 
-            return $this->responseJson(null,$request->validator->messages(),false);
-        }
 
 
         if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
@@ -56,10 +53,7 @@ class AuthController extends Controller
 
         try {
 
-            if (isset($request->validator) && $request->validator->fails()) {
 
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
 
 
 

@@ -55,7 +55,7 @@ class ReviewController extends Controller
 
         if($validator->fails())
         {
-            return $this->responseJson(null,$validator->errors(),false);
+            return $this->responseJson(null,$validator->errors()->first(),false);
         }
 
 

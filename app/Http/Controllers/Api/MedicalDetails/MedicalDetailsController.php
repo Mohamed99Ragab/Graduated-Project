@@ -21,14 +21,6 @@ class MedicalDetailsController extends Controller
 
         try {
 
-
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
-
-
-
             MedicalDetail::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'blood_type'=>$request->blood_type,

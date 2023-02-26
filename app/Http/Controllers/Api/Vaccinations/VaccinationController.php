@@ -21,10 +21,6 @@ class VaccinationController extends Controller
 
     public function index(){
 
-
-
-
-
         $vaccinations =  Vaccination::with(['users'=>function ($q){
             return $q->where('user_id',Auth::guard('api')->id());
         }])->get();
@@ -101,7 +97,7 @@ class VaccinationController extends Controller
 
         if ($validator->fails()){
 
-            return $this->responseJson(null,$validator->errors(),false);
+            return $this->responseJson(null,$validator->errors()->first(),false);
         }
 
 

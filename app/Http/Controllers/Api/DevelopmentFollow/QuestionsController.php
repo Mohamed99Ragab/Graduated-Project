@@ -48,12 +48,6 @@ class QuestionsController extends Controller
 
         try {
 
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
-
-
 
             foreach ($answers as $answer){
 
@@ -139,14 +133,6 @@ class QuestionsController extends Controller
         $answers = $request->answers;
 
         try {
-
-            if (isset($request->validator) && $request->validator->fails()) {
-
-                return $this->responseJson(null,$request->validator->messages(),false);
-            }
-
-
-
 
             $questions_ids = [];
             foreach ($answers as $answer){

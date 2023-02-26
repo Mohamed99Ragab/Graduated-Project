@@ -32,12 +32,7 @@ class SocialAuthController extends Controller
     public function token(LoginByGoogleFacebookRequest $request)
     {
 
-        if (isset($request->validator) && $request->validator->fails()) {
 
-            return $this->responseJson(null,$request->validator->messages(),false);
-
-
-        }
 
 
         try {

@@ -19,11 +19,7 @@ class UpdateProfile extends Controller
     public function update(UpdateProfileRequest $request){
 
 
-        if (isset($request->validator) && $request->validator->fails()) {
 
-            return $this->responseJson(null,$request->validator->messages(),false);
-
-        }
 
 
         $user = User::find(Auth::guard('api')->id());

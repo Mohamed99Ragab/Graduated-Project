@@ -17,10 +17,7 @@ class ResetPasswordController extends Controller
     public function __invoke(RestPasswordRequest $request)
     {
 
-        if (isset($request->validator) && $request->validator->fails()) {
 
-            return $this->responseJson(null,$request->validator->messages(),false);
-        }
 
 
 

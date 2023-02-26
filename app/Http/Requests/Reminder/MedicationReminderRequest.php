@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests\Reminder;
 
+use App\Http\Traits\HttpResponseJson;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MedicationReminderRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    use HttpResponseJson;
     public function authorize()
     {
         return true;
@@ -29,6 +26,7 @@ class MedicationReminderRequest extends FormRequest
             'end_date'=>'required|date|date_format:Y-m-d|after:now',
             'mediceTimes.*.quantity'=>'required|string',
             'mediceTimes.*.time'=>'required',
+            'mediceTimes'=>'required|array',
 
         ];
     }
@@ -47,12 +45,11 @@ class MedicationReminderRequest extends FormRequest
             'end_date.after'=>'يجب ان يكون تاريخ الانتهاء تاريخ مستقبلي',
             'mediceTimes.*.quantity.required'=>'يرجى تحديد الكمية الخاصة بالدواء',
             'mediceTimes.*.time.required'=>'يرجى تحديد الوقت الخاص بالدواء',
+            'mediceTimes.array'=>'يرجى ارسال اوقات الدواء كمصفوفة',
+            'mediceTimes.required'=>'يرجى تحديد اوقات الدواء',
+
         ];
     }
 
-    public $validator = null;
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        $this->validator = $validator;
-    }
+
 }

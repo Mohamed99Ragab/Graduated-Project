@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\AuthRequest;
 
+use App\Http\Traits\HttpResponseJson;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginReguest extends FormRequest
 {
+    use HttpResponseJson;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -43,11 +45,11 @@ class LoginReguest extends FormRequest
         ];
     }
 
-    public $validator = null;
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        $this->validator = $validator;
-    }
+//    public $validator = null;
+//    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+//    {
+//        $this->validator = $validator;
+//    }
 
 
 }
