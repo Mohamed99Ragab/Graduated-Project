@@ -63,6 +63,15 @@
                 </li>
 
                 <li>
+                    <a href="{{url('teeths')}}" class="waves-effect">
+                        <i class="fa fa-thin fa-tooth"></i>
+                        <span >الاسنان</span>
+                    </a>
+
+                </li>
+
+
+                <li>
                     <a href="{{url('reviews')}}" class="waves-effect">
                         <i class="mdi mdi-star"></i>
                         <span >المراجعات</span>

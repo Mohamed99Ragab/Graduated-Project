@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             AllergySeeder::class,
             GeneticDiseaseSeeder::class,
             ChronicDiseaseSeeder::class,
-            SkinDiseaseSeeder::class
+            SkinDiseaseSeeder::class,
+            DaysWeekSeeder::class
         ]);
     }
 }

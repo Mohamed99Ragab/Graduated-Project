@@ -44,7 +44,6 @@ class User extends Authenticatable implements JWTSubject
         'created_at',
         'updated_at',
         'email_verified_at',
-        'is_reminder_vaccine',
         'oauth_token',
         'provider',
         'provider_id',
@@ -139,6 +138,11 @@ class User extends Authenticatable implements JWTSubject
     public function userTimes(){
 
         return $this->hasManyThrough(MedicineTime::class,MedicationReminder::class,'user_id','medication_reminder_id');
+    }
+
+    public function medicinedays(){
+
+        return $this->hasMany(MedicineDay::class,'user_id');
     }
 
 

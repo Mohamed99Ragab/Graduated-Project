@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Api\Reminder;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reminder\MedicationReminderRequest;
+use App\Http\Resources\ReminderResource;
 use App\Http\Traits\HttpResponseJson;
 use App\Models\MedicationReminder;
+use App\Models\MedicineDay;
 use App\Models\MedicineTime;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Collection;
 
 class MedicationReminderController extends Controller
 {
@@ -22,14 +25,14 @@ class MedicationReminderController extends Controller
     public function index(){
 
 
-        $reminders = MedicationReminder::with(['medcineTimes'=>function($q){
-
-            $q->select('quantity','time','medication_reminder_id');
-        }])->where('user_id',Auth::guard('api')->id())->get();
+        $reminders = MedicationReminder::where('user_id',Auth::guard('api')->id())->get();
 
 
         if (isset($reminders)& $reminders->count()>0){
-            return $this->responseJson($reminders,null,true);
+
+
+            return $this->responseJson(ReminderResource::collection($reminders),null,true);
+
         }
         return $this->responseJson(null,'لا يوجد سجل خاص بالادوية حتى الان',false);
     }
@@ -38,17 +41,11 @@ class MedicationReminderController extends Controller
 
     public function get_single_reminder($reminder_id){
 
-
-        $reminder = MedicationReminder::with(['medcineTimes'=>function($q){
-
-            $q->select('quantity','time','medication_reminder_id');
-        }])->where('id',$reminder_id)->where('user_id',Auth::guard('api')->id())->first();
-
-
+        $reminder = MedicationReminder::with('medcineTimes')->where('id',$reminder_id)->where('user_id',Auth::guard('api')->id())->first();
 
         if (isset($reminder)){
 
-            return $this->responseJson($reminder,null,true);
+            return $this->responseJson(new ReminderResource($reminder),null,true);
 
         }
 
@@ -67,10 +64,12 @@ class MedicationReminderController extends Controller
 
         try {
 
+
             $reminder = MedicationReminder::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'medicine_name'=>$request->medicine_name,
                 'appointment'=>$request->appointment,
+                'month'=>$request->month,
                 'start_date'=>date_format(Carbon::now(),'Y-m-d'),
                 'end_date'=>$request->end_date
             ]);
@@ -78,13 +77,19 @@ class MedicationReminderController extends Controller
 
             foreach ($mediceTimes as $mediceTime){
 
-                MedicineTime::create([
+               $medicine_time = MedicineTime::create([
 
                     'quantity'=>$mediceTime['quantity'],
                     'time'=>$mediceTime['time'],
+                    'month'=>$mediceTime['month'],
                     'medication_reminder_id'=>$reminder->id,
-
                 ]);
+
+
+               if(isset($mediceTime['days'])){
+                   $medicine_time->medicinedays()->sync($mediceTime['days']);
+               }
+
 
             }
 
@@ -128,6 +133,7 @@ class MedicationReminderController extends Controller
                     'user_id'=>Auth::guard('api')->id(),
                     'medicine_name'=>$request->medicine_name,
                     'appointment'=>$request->appointment,
+                    'month'=>$request->month,
                     'end_date'=>$request->end_date
                 ]);
 
@@ -144,6 +150,16 @@ class MedicationReminderController extends Controller
                         'time' => $mediceTimes[$i]['time'],
                         'medication_reminder_id' => $reminder_id,
                     ]);
+
+
+                    if(isset($mediceTimes[$i]['days'])){
+
+                        $medcine_time->medicinedays()->sync($mediceTimes[$i]['days']);
+
+                    }
+
+
+
                 }
 
 

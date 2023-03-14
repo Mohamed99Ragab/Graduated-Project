@@ -15,7 +15,9 @@ class CreateAiDiseasesTable extends Migration
     {
         Schema::create('ai_diseases', function (Blueprint $table) {
             $table->id();
-            $table->string('prediction');
+            // 0 => normal , 1=> upnormal
+            $table->tinyInteger('prediction')->comment('0 =>normal , 1=>upnormal');
+            $table->string('disease_name');
             $table->string('disease_photo');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

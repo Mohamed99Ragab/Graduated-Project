@@ -15,6 +15,7 @@ class MedicineTime extends Model
     protected $fillable = [
         'quantity',
         'time',
+        'month',
         'medication_reminder_id',
         'created_at',
         'updated_at'
@@ -32,7 +33,10 @@ class MedicineTime extends Model
         return $this->belongsTo(MedicationReminder::class,'medication_reminder_id');
     }
 
+    public function medicinedays(){
 
+        return $this->belongsToMany(MedicineDay::class,'medicine_time_day','medicine_time_id','medicine_day_id');
+    }
 
 
 

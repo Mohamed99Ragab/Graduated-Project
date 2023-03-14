@@ -23,7 +23,7 @@ class TeethDevelopmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'teeth_name'=>'required|string',
+            'teeth_id'=>'required|numeric',
             'apperance_date'=>'required|date|date_format:Y-m-d',
         ];
     }

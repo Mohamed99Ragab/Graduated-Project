@@ -40,6 +40,7 @@ class AiDiseaseController extends Controller
             AiDisease::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'prediction'=>$request->prediction,
+                'disease_name'=>$request->disease,
                 'disease_photo'=>$request->file('photo')->hashName()
             ]);
 

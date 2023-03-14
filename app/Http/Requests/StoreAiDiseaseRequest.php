@@ -21,8 +21,9 @@ class StoreAiDiseaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'prediction'=>'required|string',
-            'photo'=>'required|mimes:jpg,png,jpeg'
+            'prediction'=>'required|string|in:0,1',
+            'disease'=>'required|string',
+            'photo'=>'required|image'
         ];
     }
 
@@ -31,8 +32,10 @@ class StoreAiDiseaseRequest extends FormRequest
     {
         return [
             'prediction.required'=>'يرجى ارسال نتيجية الموديل',
+            'prediction.in'=>'يرجي فقط تحديد نتيجة التنباء في حالة ان الشخص مصاب ضع 1 و في حالة انه غير مصاب ضع 0',
+            'disease.required'=>'يرجى ارسال اسم المرض',
             'photo.required'=>'يرجى ارفاق صورة الموديل',
-            'photo.mimes'=>' jpg,png,jpeg يجب ان يكون نوع الصورة المرفقة بهذة الصيغ فقط'
+            'photo.image'=>'يجب ان يكون الملف المرفق من نوع صورة فقط'
         ];
     }
 

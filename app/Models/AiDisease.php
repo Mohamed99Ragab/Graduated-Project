@@ -13,6 +13,7 @@ class AiDisease extends Model
     protected $fillable = [
         'user_id',
         'prediction',
+        'disease_name',
         'disease_photo',
         'created_at',
         'updated_at'
@@ -20,7 +21,6 @@ class AiDisease extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at'
     ];
 

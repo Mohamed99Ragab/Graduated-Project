@@ -12,7 +12,7 @@ class TeethDevelopment extends Model
     protected $fillable = [
         'user_id',
         'apperance_date',
-        'teeth_name',
+        'teeth_id',
         'age_in_years',
         'age_in_months',
         'age_in_days',
@@ -30,6 +30,12 @@ class TeethDevelopment extends Model
     public function user(){
 
         return $this->belongsTo(User::class,'user_id');
+    }
+
+
+    public function teeth(){
+
+        return $this->belongsTo(Teeth::class,'teeth_id');
     }
 
 }

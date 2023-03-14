@@ -24,6 +24,10 @@ class NotificationsResource extends JsonResource
 
                 $type = 'التطعيمات';
             }
+        elseif ($type == 'TeethReminderNotification'){
+
+            $type = 'الاسنان';
+        }
 
 
         return [

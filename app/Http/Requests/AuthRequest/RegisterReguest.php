@@ -31,7 +31,7 @@ class RegisterReguest extends FormRequest
             'email' => 'required|string|email|unique:users,email',
             'photo' => 'mimes:jpg,png,jpeg|image',
             'gender' => 'required|string|in:ذكر,انثى',
-            'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
+            'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
             'password' => 'required|string|confirmed|min:8',
             'fcm_token' => 'required'
         ];

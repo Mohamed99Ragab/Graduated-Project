@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\DevelopmentFollow\QuestionController;
 use App\Http\Controllers\Dashboard\DevelopmentFollow\SubjectController;
 use App\Http\Controllers\Dashboard\DevelopmentFollow\TipsController;
 use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\TeethsController;
 use App\Http\Controllers\Dashboard\VaccinationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TestController;
@@ -75,6 +76,14 @@ Route::group(['middleware'=>'auth:admin'],function (){
 
     // Vaccinations
     Route::resource('vaccinations',VaccinationController::class);
+
+
+    //Teeths
+    Route::resource('teeths',TeethsController::class);
+
+
+
+
 
     // Reviews
     Route::get('reviews',[ReviewController::class,'index']);

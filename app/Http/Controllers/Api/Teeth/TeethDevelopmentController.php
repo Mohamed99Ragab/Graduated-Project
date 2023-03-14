@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Teeth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Teeth\TeethDevelopmentRequest;
+use App\Http\Resources\TeethResource;
 use App\Http\Traits\ChildTrait;
 use App\Http\Traits\HttpResponseJson;
 use App\Models\TeethDevelopment;
@@ -21,11 +22,12 @@ class TeethDevelopmentController extends Controller
 
        public function index(){
 
-           $teeth_devs = TeethDevelopment::where('user_id',Auth::guard('api')->id())->get();
+           $teeth_devs = TeethDevelopment::with('teeth')->where('user_id',Auth::guard('api')->id())->get();
 
 
            if (isset($teeth_devs)& $teeth_devs->count()>0){
-               return $this->responseJson($teeth_devs,null,true);
+
+               return $this->responseJson(TeethResource::collection($teeth_devs) ,null,true);
            }
            return $this->responseJson(null,'لا يوجد سجل للاسنان حتى الان',false);
        }
@@ -35,7 +37,7 @@ class TeethDevelopmentController extends Controller
            $teeth_devs = TeethDevelopment::find($teeth_id);
 
            if (isset($teeth_devs)){
-               return $this->responseJson($teeth_devs,null,true);
+               return $this->responseJson(new TeethResource($teeth_devs),null,true);
            }
 
 
@@ -65,7 +67,7 @@ class TeethDevelopmentController extends Controller
             TeethDevelopment::create([
                 'user_id'=>$user->id,
                 'apperance_date'=>$request->apperance_date,
-                'teeth_name'=>$request->teeth_name,
+                'teeth_id'=>$request->teeth_id,
                 'age_in_years'=>$ages['years'],
                 'age_in_months'=>$ages['months'],
                 'age_in_days'=>$ages['days'],
@@ -107,7 +109,7 @@ class TeethDevelopmentController extends Controller
                 $teeth->update([
                     'user_id'=>$user->id,
                     'apperance_date'=>$request->apperance_date,
-                    'teeth_name'=>$request->teeth_name,
+                    'teeth_id'=>$request->teeth_id,
                     'age_in_years'=>$ages['years'],
                     'age_in_months'=>$ages['months'],
                     'age_in_days'=>$ages['days'],

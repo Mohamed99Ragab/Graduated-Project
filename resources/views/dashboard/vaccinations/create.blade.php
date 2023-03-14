@@ -42,14 +42,14 @@
                             <div class="col-8">
                                 <div class="form-group">
                                     <label for="name">اسم التطعيم :</label>
-                                    <input type="text"name="name" class="form-control" id="name">
+                                    <input type="text"name="name" class="form-control" id="name"value="{{old('name')}}">
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label for="syringe">عدد الحقن:</label>
-                                    <input type="number"name="number_syringe" class="form-control" id="syringe">
+                                    <input type="number"name="number_syringe" class="form-control" id="syringe"value="{{old('number_syringe')}}">
                                 </div>
                             </div>
 
@@ -58,7 +58,7 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="age">المرحلة العمرية بالشهور: </label>
-                                    <input type="number"name="vaccine_age" class="form-control" id="age">
+                                    <input type="number"name="vaccine_age" class="form-control" id="age"value="{{old('vaccine_age')}}">
                                 </div>
                             </div>
 
@@ -72,21 +72,21 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label>تعريف التطعيم : </label>
-                                    <textarea cols="4"rows="6" class="form-control"name="about"></textarea>
+                                    <textarea cols="4"rows="6" class="form-control"name="about">{{old('about')}}</textarea>
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label>الوقاية من المرض : </label>
-                                    <textarea cols="4"rows="6" class="form-control"name="disease_prevention"></textarea>
+                                    <textarea cols="4"rows="6" class="form-control"name="disease_prevention">{{old('disease_prevention')}}</textarea>
                                 </div>
                             </div>
 
                             <div class="col">
                                 <div class="form-group">
                                     <label>آثار جانبية : </label>
-                                    <textarea cols="4"rows="6" class="form-control"name="side_effects"></textarea>
+                                    <textarea cols="4"rows="6" class="form-control"name="side_effects">{{old('side_effects')}}</textarea>
                                 </div>
                             </div>
 

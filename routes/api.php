@@ -2,17 +2,21 @@
 
 use App\Http\Controllers\Api\AI\AiDiseaseController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\CompleteProfileController;
 use App\Http\Controllers\Api\Auth\SocialAuthController;
 use App\Http\Controllers\Api\Auth\UpdateProfile;
+use App\Http\Controllers\Api\DaysWeekController;
 use App\Http\Controllers\Api\DevelopmentFollow\QuestionsController;
 use App\Http\Controllers\Api\MedicalDetails\MedicalDetailsController;
 use App\Http\Controllers\Api\MedicalTests\MedicalTestController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
 use App\Http\Controllers\Api\Prescriptions\PrescriptionController;
 use App\Http\Controllers\Api\Reminder\MedicationReminderController;
+use App\Http\Controllers\Api\Reports\ReportController;
 use App\Http\Controllers\Api\RestPassword\CodeCheckController;
 use App\Http\Controllers\Api\RestPassword\ForgotPasswordController;
 use App\Http\Controllers\Api\RestPassword\ResetPasswordController;
+use App\Http\Controllers\Api\Teeth\TeethController;
 use App\Http\Controllers\Api\Teeth\TeethDevelopmentController;
 use App\Http\Controllers\Api\Vaccinations\VaccinationController;
 use App\Http\Controllers\ReviewController;
@@ -65,6 +69,10 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     // update profile
     Route::post('update-profile',[UpdateProfile::class,'update']);
 
+    // complete profile
+    Route::post('complete-profile',[CompleteProfileController::class,'completeProfile']);
+
+
     // medical details
     Route::post('store-medical-details',[MedicalDetailsController::class,'storeMedicalDetails']);
     Route::get('all-allergies',[MedicalDetailsController::class,'all_allergies']);
@@ -95,7 +103,8 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     Route::delete('delete-teeth-dev/{teeth_id}',[TeethDevelopmentController::class,'delete_teeth_dev']);
     Route::get('get-single-teeth/{teeth_id}',[TeethDevelopmentController::class,'get_single_teeth']);
     Route::get('all-teeth-dev',[TeethDevelopmentController::class,'index']);
-
+    // Teeth api
+    Route::get('medical-teeths',[TeethController::class,'get_all_teeths']);
 
 
 
@@ -105,6 +114,9 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     Route::get('all-reminders',[MedicationReminderController::class,'index']);
     Route::get('get-single-reminder/{reminder_id}',[MedicationReminderController::class,'get_single_reminder']);
     Route::delete('delete-reminder/{reminder_id}',[MedicationReminderController::class,'delete_reminder']);
+
+    // api to get all days of week
+    Route::get('days',[DaysWeekController::class,'get_days']);
 
 
     // Ai Diseases
@@ -129,12 +141,31 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     Route::post('update-tips',[QuestionsController::class,'update_tips']);
 
 
+    // Reports Api
+    Route::get('medical-info',[ReportController::class,'medical_details_info']);
+
+    Route::get('development-follow-info',[ReportController::class,'latestTipWithQuestions']);
+
+    Route::get('teeth-report',[ReportController::class,'teethReport']);
+
+    Route::get('vaccine-report',[ReportController::class,'vaccinationsReport']);
+
+    Route::get('disease-report',[ReportController::class,'aiDiseaseReport']);
+
+
+
+
+
+
     // Reviews
     Route::post('make-review',[ReviewController::class,'store']);
 
     // Notifiactions
     Route::get('history-notify',[NotificationController::class,'history_of_notidfication']);
     Route::get('mark-as-read',[NotificationController::class,'mark_all_notificatis_as_read']);
+
+
+
 
 
 });

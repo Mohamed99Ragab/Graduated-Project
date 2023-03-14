@@ -17,6 +17,7 @@ class CreateMedicineTimesTable extends Migration
             $table->id();
             $table->string('quantity');
             $table->time('time');
+            $table->date('month')->nullable();
             $table->foreignId('medication_reminder_id')->references('id')
                 ->on('medication_reminders')->cascadeOnDelete();
             $table->timestamps();

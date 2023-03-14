@@ -16,8 +16,9 @@ class CreateTeethDevelopmentsTable extends Migration
         Schema::create('teeth_developments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('teeth_id')->references('id')->on('teeths')->cascadeOnDelete();
+
             $table->date('apperance_date');
-            $table->string('teeth_name');
             $table->string('age_in_years')->comment('child age in years when your teeth apperance');
             $table->string('age_in_months')->comment('child age in months when your teeth apperance');
             $table->string('age_in_days')->comment('child age in days when your teeth apperance');
