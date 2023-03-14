@@ -20,6 +20,7 @@ class UserAuth extends JsonResource
             'email'=>$this->email,
             'gender'=>$this->gender,
             'birth_date'=>$this->birth_date,
+            'is_reminder_vaccine'=>$this->is_reminder_vaccine,
             'photo'=> $this->photo !=null ? asset('images/users/'.$this->photo) : null
         ];
 
