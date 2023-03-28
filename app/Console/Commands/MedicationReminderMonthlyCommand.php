@@ -54,7 +54,7 @@ class MedicationReminderMonthlyCommand extends Command
 
                     foreach ($times as $time) {
 
-                        if (Carbon::parse($time->month)->monthName == Carbon::now()->monthName) {
+                        if (Carbon::parse($time->month)->day == Carbon::now()->day && Carbon::parse($time->month)->month == Carbon::now()->month) {
 
                             $user->notify(new MedicationReminderNotification('تذكير موعد العلاج', " موعد اخذ الدواء " . $reminder->medicine_name . " الان"));
                         }

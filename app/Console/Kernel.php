@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('medicine:reminder')->everyMinute();
         $schedule->command('medicine:weekly')->hourly();
-        $schedule->command('medicine:monthly')->monthlyOn(1,'08:00');
+        $schedule->command('medicine:monthly')->daily();
         $schedule->command('vaccine:reminder')->monthlyOn(1,'08:00');
         $schedule->command('teeth:reminder')->monthlyOn(5,'12:00');
 

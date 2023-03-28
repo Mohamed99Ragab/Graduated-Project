@@ -41,6 +41,7 @@ class UserVaccinationResource extends JsonResource
             'vaccine_age'=>$this->vaccine_age,
             'prevention'=>$this->disease_prevention,
             'status'=>!empty($user_vac) ? 1 :0,
+            'important'=>$this->important,
             'proposed_vaccination_date'=>$proposed_vaccination_date
 
         ];

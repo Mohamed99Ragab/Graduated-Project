@@ -28,21 +28,30 @@ class AuthController extends Controller
     public function login(LoginReguest $request){
 
 
+        DB::beginTransaction();
 
+        try{
 
-        if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
+            if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
 
-            return $this->responseJson(null,'خطاء في بيانات الدخول',false);
+                return $this->responseJson(null,'خطاء في بيانات الدخول',false);
+            }
+
+            // add devive token to user
+            DeviceToken::updateOrCreate(
+                ['token' => $request->fcm_token],
+                ['user_id' => Auth::guard('api')->id()]
+            );
+
+            DB::commit();
+            return $this->createNewToken($token);
         }
 
-        // add devive token to user
-        DeviceToken::updateOrCreate(
-            ['token' => $request->fcm_token],
-            ['user_id' => Auth::guard('api')->id()]
-        );
+        catch (\Exception $e){
 
+            DB::rollback();
+        }
 
-        return $this->createNewToken($token);
     }
 
 

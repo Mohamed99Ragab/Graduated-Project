@@ -22,13 +22,14 @@ class TestController extends Controller
     public function userTest()
     {
 
+
         return User::with('medicalDetails')->find(3);
     }
 
     public function test()
     {
 
-
+        return date_format(Carbon::now(),'Y-m-d');
 
 
 
