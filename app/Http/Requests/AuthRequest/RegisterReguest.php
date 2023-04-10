@@ -29,7 +29,7 @@ class RegisterReguest extends FormRequest
         return [
             'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
             'email' => 'required|string|email|unique:users,email',
-            'photo' => 'mimes:jpg,png,jpeg|image',
+            'photo' => 'image',
             'gender' => 'required|string|in:ذكر,انثى',
             'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
             'password' => 'required|string|confirmed|min:8',
@@ -54,7 +54,6 @@ class RegisterReguest extends FormRequest
             'birth_date.required' => 'يرجى تحديد تاريخ ميلاد الطفل',
             'birth_date.date_format' => 'يجب ان يكون تاريخ الميلاد بهذا الصيغة 12-02-2005',
             'birth_date.before' => 'عذرا لا يمكن ان يكون تاريخ الميلاد قبل اليوم',
-            'photo.mimes' => 'نوع الصورة المرفقة يجب ان تكون بهذا الصيغ ,jpeg,png,jpg',
             'photo.image' => 'يجب ان يكون الملف المرفق صورة وليس شيء اخر',
             'fcm_token' => 'هذا الحقل مطلوب'
 

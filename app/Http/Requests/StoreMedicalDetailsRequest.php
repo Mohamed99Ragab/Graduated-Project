@@ -21,11 +21,9 @@ class StoreMedicalDetailsRequest extends FormRequest
     public function rules()
     {
         return [
-//            'user_id'=>'required',
+
             'blood_type'=>'required',
-            'allergy'=>'required|max:255',
-            'chronic_disease'=>'required|max:255',
-            'skin_disease'=>'required|max:255'
+
         ];
     }
 
@@ -42,9 +40,6 @@ class StoreMedicalDetailsRequest extends FormRequest
     {
         return [
             'blood_type' => 'فصيلة الدم',
-            'allergy'=>'الحساسية',
-            'chronic_disease'=>'الامراض المزمنة',
-            'skin_disease'=>'امراض الجلدية'
 
         ];
     }

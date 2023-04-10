@@ -24,7 +24,7 @@ class StoreMedicalTestRequest extends FormRequest
             'lab_name'=>'required|string',
             'type'=>'required|string',
             'date'=>'required|date|date_format:Y-m-d',
-            'file'=>'required|mimes:mimes:jpg,png,jpeg,pdf',
+            'file'=>'required|file|mimes:jpg,png,jpeg,pdf',
         ];
     }
 
@@ -36,7 +36,7 @@ class StoreMedicalTestRequest extends FormRequest
             'type.required'=>'يرجى ادخال نوع التحليل',
             'date.required'=>'يرجى ادخال تاريخ التحليل',
             'file.required'=>'يرجى ارفاق صورة من التحليل او ارفاق مستند',
-            'file.mimes'=>' jpg,png,jpeg,pdf يجب ان يكون نوع الملف المرفق بهذة الصيغ فقط'
+            'file.mimes'=>'image,pdf يجب ان يكون نوع الملف المرفق'
         ];
     }
 

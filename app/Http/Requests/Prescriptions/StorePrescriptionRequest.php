@@ -23,7 +23,7 @@ class StorePrescriptionRequest extends FormRequest
         return [
             'note'=>'nullable|string',
             'date'=>'required|date|date_format:Y-m-d',
-            'file'=>'required|mimes:mimes:jpg,png,jpeg,pdf',
+            'file'=>'required|mimes:jpg,png,jpeg,pdf',
         ];
     }
 
@@ -33,7 +33,7 @@ class StorePrescriptionRequest extends FormRequest
             'note.string'=>'يرجى ادخال الملاحظة كنص وليس شيئا اخر',
             'date.required'=>'يرجى ادخال تاريخ الروشتة',
             'file.required'=>'يرجى ارفاق صورة من الروشتة او ارفاق مستند',
-            'file.mimes'=>' jpg,png,jpeg,pdf يجب ان يكون نوع الملف المرفق بهذة الصيغ فقط'
+            'file.mimes'=>'image,pdf يجب ان يكون نوع الملف المرفق'
         ];
     }
 

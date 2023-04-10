@@ -17,9 +17,9 @@ class CreateMedicalDetailsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('blood_type');
-            $table->string('allergy');
-            $table->string('skin_disease');
-            $table->string('chronic_disease');
+            $table->string('allergy')->nullable()->default(' لا توجد حساسية');
+            $table->string('skin_disease')->nullable()->default('لا توجد امراض جلدية');
+            $table->string('chronic_disease')->nullable()->default('لا توجد امراض مزمنة');
             $table->string('genetic_disease')->nullable()->default('لا توجد اي امراض وراثية');
             $table->string('Is_medicine')->nullable()->default('لا توجد اي ادوية سابقة');
             $table->string('medicine_file')->nullable();

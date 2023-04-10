@@ -29,9 +29,17 @@ class TestController extends Controller
     public function test()
     {
 
-        return date_format(Carbon::now(),'Y-m-d');
+        $user = User::find(1);
+        $vaccine = Vaccination::find(1);
+        $date_now = date_format(Carbon::now(),'Y-m-d');
+        $birth_date = $user->birth_date;
 
+        $ages = $this->calc_child_age($birth_date,$date_now);
 
+        $vaccine_date = date_format(Carbon::parse($birth_date)->addMonths($vaccine->vaccine_age - $ages['months'])->subDays(2),'Y-m-d');
+
+//        return $ages['months'];
+        return $vaccine_date;
 
     }
 }

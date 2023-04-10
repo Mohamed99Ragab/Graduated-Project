@@ -23,7 +23,7 @@ class UpdatePrescriptionRequest extends FormRequest
         return [
             'note'=>'nullable|string',
             'date'=>'required|date|date_format:Y-m-d',
-            'file'=>'mimes:mimes:jpg,png,jpeg,pdf',
+            'file'=>'mimes:jpg,png,jpeg,pdf',
         ];
     }
 
@@ -32,7 +32,7 @@ class UpdatePrescriptionRequest extends FormRequest
         return [
             'note.string'=>'يرجى ادخال الملاحظة كنص وليس شيئا اخر',
             'date.required'=>'يرجى ادخال تاريخ الروشتة',
-            'file.mimes'=>' jpg,png,jpeg,pdf يجب ان يكون نوع الملف المرفق بهذة الصيغ فقط'
+            'file.mimes'=>'image,pdf يجب ان يكون نوع الملف المرفق'
         ];
     }
 

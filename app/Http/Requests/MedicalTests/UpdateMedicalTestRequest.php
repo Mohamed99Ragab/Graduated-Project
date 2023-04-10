@@ -24,7 +24,7 @@ class UpdateMedicalTestRequest extends FormRequest
             'lab_name'=>'required|string',
             'type'=>'required|string',
             'date'=>'required|date|date_format:Y-m-d',
-            'file'=>'mimes:mimes:jpg,png,jpeg,pdf',
+            'file'=>'mimes:jpg,png,jpeg,pdf',
         ];
     }
 
@@ -35,7 +35,7 @@ class UpdateMedicalTestRequest extends FormRequest
             'lab_name.string'=>'يرجى ادخال الاسم كنص وليس شيئا اخر',
             'type.required'=>'يرجى ادخال نوع التحليل',
             'date.required'=>'يرجى ادخال تاريخ التحليل',
-            'file.mimes'=>' jpg,png,jpeg,pdf يجب ان يكون نوع الملف المرفق بهذة الصيغ فقط'
+            'file.mimes'=>'image,pdf يجب ان يكون نوع الملف المرفق'
         ];
     }
 
