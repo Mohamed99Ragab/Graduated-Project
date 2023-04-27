@@ -45,6 +45,10 @@ class MedicationReminderController extends Controller
 
         if (isset($reminder)){
 
+
+
+
+
             return $this->responseJson(new ReminderResource($reminder),null,true);
 
         }
@@ -69,7 +73,6 @@ class MedicationReminderController extends Controller
                 'user_id'=>Auth::guard('api')->id(),
                 'medicine_name'=>$request->medicine_name,
                 'appointment'=>$request->appointment,
-                'month'=>$request->month,
                 'start_date'=>date_format(Carbon::now(),'Y-m-d'),
                 'end_date'=>$request->end_date
             ]);

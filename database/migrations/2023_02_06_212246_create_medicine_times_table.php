@@ -15,7 +15,6 @@ class CreateMedicineTimesTable extends Migration
     {
         Schema::create('medicine_times', function (Blueprint $table) {
             $table->id();
-            $table->string('quantity');
             $table->time('time');
             $table->date('month')->nullable();
             $table->foreignId('medication_reminder_id')->references('id')

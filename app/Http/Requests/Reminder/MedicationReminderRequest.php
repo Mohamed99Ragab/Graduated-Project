@@ -24,7 +24,6 @@ class MedicationReminderRequest extends FormRequest
             'medicine_name'=>'required|string|regex:/^[\p{Arabic} ]+$/u',
             'appointment'=>'required|string',
             'end_date'=>'required|date|date_format:Y-m-d|after:now',
-            'mediceTimes.*.quantity'=>'required|string',
             'mediceTimes.*.time'=>'required',
             'mediceTimes'=>'required|array',
 
@@ -43,7 +42,6 @@ class MedicationReminderRequest extends FormRequest
             'end_date.date_format'=>'Y-m-d يجب ان يكون التاريخ بنفس الصيغة',
             'end_date.date'=>'هذا التاريخ ليس صحيحا',
             'end_date.after'=>'يجب ان يكون تاريخ الانتهاء تاريخ مستقبلي',
-            'mediceTimes.*.quantity.required'=>'يرجى تحديد الكمية الخاصة بالدواء',
             'mediceTimes.*.time.required'=>'يرجى تحديد الوقت الخاص بالدواء',
             'mediceTimes.array'=>'يرجى ارسال اوقات الدواء كمصفوفة',
             'mediceTimes.required'=>'يرجى تحديد اوقات الدواء',

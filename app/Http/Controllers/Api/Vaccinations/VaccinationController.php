@@ -35,42 +35,16 @@ class VaccinationController extends Controller
     public function single_vaccine($vaccination_id){
 
 
-        $vaccine = Vaccination::find($vaccination_id);
+        $vaccine = Vaccination::with(['users'=>function ($q){
+            return $q->where('user_id',Auth::guard('api')->id());
+        }])->find($vaccination_id);
 
 
         if(isset($vaccine)){
 
-            //calc age of user in months
-            $user = User::find(Auth::guard('api')->id());
-            $birth_date = $user->birth_date;
-            $date_now = date_format(Carbon::now(),'Y-m-d');
-
-            $ages = $this->calc_child_age($birth_date,$date_now);
 
 
-
-
-            if($vaccine->vaccine_age ==$ages['months'])
-            {
-                $vaccine->vaccination_date = $date_now;
-
-            }
-            elseif ($vaccine->vaccine_age > $ages['months'])
-            {
-                $vaccine->vaccination_date = date_format(Carbon::parse($birth_date)->addMonths($vaccine->vaccine_age - $ages['months']),'Y-m-d');
-
-            }
-            elseif ($vaccine->vaccine_age < $ages['months'])
-            {
-                $vaccine->vaccination_date = 'لقد فاتك معاد التطعيم';
-
-            }
-
-
-
-
-
-            return $this->responseJson($vaccine,null,true);
+            return $this->responseJson(new UserVaccinationResource($vaccine),null,true);
         }
 
         return $this->responseJson(null,'لا يوجد تطعيم بهذا المعرف',true);
