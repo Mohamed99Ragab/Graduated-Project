@@ -13,7 +13,7 @@ class MedicineTime extends Model
     protected $table = 'medicine_times';
 
     protected $fillable = [
-        'quantity',
+
         'time',
         'month',
         'medication_reminder_id',

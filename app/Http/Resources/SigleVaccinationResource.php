@@ -8,18 +8,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
-class UserVaccinationResource extends JsonResource
+class SigleVaccinationResource extends JsonResource
 {
+
     use ChildTrait;
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
+
     public function toArray($request)
     {
-
         $user_vac = [];
         foreach ($this->users as $user_vaccine){
             $user_vac [] = $user_vaccine->pivot->vaccination_id;
@@ -58,14 +54,17 @@ class UserVaccinationResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'prevention'=>$this->disease_prevention,
             'vaccine_age'=>$this->vaccine_age,
+            'disease_prevention'=>$this->disease_prevention,
+            'about'=>$this->about,
+            'side_effects'=>$this->side_effects,
+            'number_syringe'=>$this->number_syringe,
             'status'=>!empty($user_vac) ? 1 :0,
             'important'=>$this->important,
-            'number_syringe'=>$this->number_syringe,
             'proposed_vaccination_date'=>$proposed_vaccination_date,
             'vaccination_date'=>$this->vaccination_date,
 
         ];
     }
+
 }

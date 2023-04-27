@@ -38,7 +38,6 @@ class ReminderResource extends JsonResource
 
             $times []= [
                 'id'=>$time->id,
-                'quantity'=>$time->quantity,
                 'time'=>$time->time,
                 'month'=>$time->month,
             ];

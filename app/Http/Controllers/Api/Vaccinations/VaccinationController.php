@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Vaccinations;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SigleVaccinationResource;
 use App\Http\Resources\UserVaccinationResource;
 use App\Http\Traits\ChildTrait;
 use App\Http\Traits\HttpResponseJson;
@@ -44,7 +45,7 @@ class VaccinationController extends Controller
 
 
 
-            return $this->responseJson(new UserVaccinationResource($vaccine),null,true);
+            return $this->responseJson(new SigleVaccinationResource($vaccine),null,true);
         }
 
         return $this->responseJson(null,'لا يوجد تطعيم بهذا المعرف',true);

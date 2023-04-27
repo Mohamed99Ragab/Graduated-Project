@@ -63,6 +63,11 @@ class MedicationReminderController extends Controller
     public function store_reminder(MedicationReminderRequest $request){
 
 
+
+
+
+
+
         DB::beginTransaction();
         $mediceTimes = $request->mediceTimes;
 
@@ -82,7 +87,7 @@ class MedicationReminderController extends Controller
 
                $medicine_time = MedicineTime::create([
 
-                    'quantity'=>$mediceTime['quantity'],
+
                     'time'=>$mediceTime['time'],
                     'month'=>$mediceTime['month'],
                     'medication_reminder_id'=>$reminder->id,
