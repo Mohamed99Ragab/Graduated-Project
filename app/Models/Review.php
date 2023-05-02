@@ -12,7 +12,6 @@ class Review extends Model
 
     protected $fillable = [
         'message',
-        'review',
         'user_id',
         'created_at',
         'updated_at'

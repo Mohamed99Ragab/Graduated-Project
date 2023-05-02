@@ -34,7 +34,7 @@ class MedicationReminderController extends Controller
             return $this->responseJson(ReminderResource::collection($reminders),null,true);
 
         }
-        return $this->responseJson(null,'لا يوجد سجل خاص بالادوية حتى الان',false);
+        return $this->responseJson($reminders,'لا يوجد سجل خاص بالادوية حتى الان',true);
     }
 
 

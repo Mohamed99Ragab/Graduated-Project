@@ -43,12 +43,11 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'review'=>'required|numeric'
+            'message'=>'required|string'
         ];
 
         $messages = [
-            'review.required' => 'يرجى تحديد التقييم',
-            'review.numeric'=>'يجب ارسال التقييم كقيمة رقمية وليس نصية'
+            'message.required' => 'يرجى كتابة رسالتك',
         ];
 
         $validator = Validator::make($request->all(),$rules,$messages);
@@ -63,7 +62,6 @@ class ReviewController extends Controller
 
         $review = Review::create([
             'message'=>$request->message,
-            'review'=>$request->review,
             'user_id'=>Auth::guard('api')->id()
         ]);
 

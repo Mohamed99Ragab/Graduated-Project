@@ -55,7 +55,6 @@
                             <th>#</th>
                             <th>المستخدم</th>
                             <th>الرسالة</th>
-                            <th>التقييم</th>
                             <th>العمليات</th>
                         </tr>
                         </thead>
@@ -66,11 +65,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$review->user->name}}</td>
                                 <td>{{$review->message}}</td>
-                                <td>
 
-                                    <input type="hidden" class="rating" data-filled="mdi mdi-star text-primary" data-empty="mdi mdi-star-outline text-muted" data-readonly value="{{$review->review}}" />
-
-                                </td>
                                 <td>
 
 

@@ -54,7 +54,7 @@ class UpdateProfile extends Controller
            //to upload new photo on server
            $this->uploadImage($request->file('photo'),'users','images');
 
-           return $this->responseJson(null,'تم التعديل بنجاح',true);
+           return $this->responseJson($user,'تم التعديل بنجاح',true);
 
        }
        else{

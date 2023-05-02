@@ -38,7 +38,7 @@ class NotificationController extends Controller
 
         }
 
-        return $this->responseJson(null,'لا توجد اشعارات جديدة حتى الان',true);
+        return $this->responseJson($notifications,'لا توجد اشعارات جديدة حتى الان',true);
 
     }
 

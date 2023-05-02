@@ -31,7 +31,7 @@ class MedicalTestController extends Controller
         if (isset($medical_tests)& $medical_tests->count()>0){
             return $this->responseJson($medical_tests,null,true);
         }
-        return $this->responseJson(null,'لا يوجد تحاليل طبية حتى الان',false);
+        return $this->responseJson($medical_tests,'لا يوجد تحاليل طبية حتى الان',true);
 
     }
 

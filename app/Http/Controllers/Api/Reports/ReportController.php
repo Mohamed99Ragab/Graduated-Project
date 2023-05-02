@@ -32,7 +32,7 @@ class ReportController extends Controller
 
         }
 
-        return $this->responseJson(null,'لا يوجد تفاصيل طبية للمستخدم حتى الان',false);
+        return $this->responseJson(null,'لا يوجد تفاصيل طبية للمستخدم حتى الان',true);
 
     }
 
@@ -54,7 +54,7 @@ class ReportController extends Controller
             return $this->responseJson(new QuestionsOfLatestTipsResource($tips),null,true);
 
         }
-        return $this->responseJson(null,'لا توجد ملاحظات لطفلك حتى الان',false);
+        return $this->responseJson(null,'لا توجد ملاحظات لطفلك حتى الان',true);
 
 
 
@@ -73,7 +73,7 @@ class ReportController extends Controller
 
         }
 
-        return $this->responseJson(null,'لا يوجد سجل خاص بالاسنان لطفلك حتى الان',false);
+        return $this->responseJson(null,'لا يوجد سجل خاص بالاسنان لطفلك حتى الان',true);
 
 
 
@@ -92,7 +92,7 @@ class ReportController extends Controller
 
         }
 
-        return $this->responseJson(null,'حتي الان لا يوجد اي تطعميات لطفلك',false);
+        return $this->responseJson($vaccinations,'حتي الان لا يوجد اي تطعميات لطفلك',true);
 
 
 
@@ -111,7 +111,7 @@ class ReportController extends Controller
 
         }
 
-        return $this->responseJson(null,'لا يوجد حتي الان اي امراض اصيب بها طفلك',false);
+        return $this->responseJson($diseases,'لا يوجد حتي الان اي امراض اصيب بها طفلك',true);
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\DevelopmentFlowReminderCommand;
 use App\Console\Commands\MedicationReminderCommand;
 use App\Console\Commands\MedicationReminderMonthlyCommand;
 use App\Console\Commands\MedicationReminderWeeklyCommand;
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
         MedicationReminderWeeklyCommand::class,
         MedicationReminderMonthlyCommand::class,
         TeethReminderCommand::class,
+        DevelopmentFlowReminderCommand::class,
     ];
     protected function schedule(Schedule $schedule)
     {
@@ -33,6 +35,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('medicine:monthly')->daily();
         $schedule->command('vaccine:reminder')->daily();
         $schedule->command('teeth:reminder')->monthlyOn(5,'12:00');
+        $schedule->command('devflow:notify')->monthlyOn(1,'10:00');
+
 
     }
 

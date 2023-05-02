@@ -34,7 +34,12 @@ class QuestionsController extends Controller
 
         $questions = QuestionSubjectResource::collection($questions);
 
-        return $this->responseJson($questions,null,true);
+        if (isset($questions) && $questions->count() >0)
+        {
+            return $this->responseJson($questions,null,true);
+
+        }
+        return $this->responseJson($questions,'لا توجد اسئلة لنفس المرحلة العمرية الخاصة بك',true);
 
 
     }
@@ -103,17 +108,16 @@ class QuestionsController extends Controller
 
 
 
-        $tip = Tips::find($tip_id);
+//        $tip = Tips::find($tip_id);
+
+        $questions = Question::with(['subject','tips'=>function ($q) use($tip_id){
+
+            return $q->where('tips.id',$tip_id);
+        }])->get();
 
 
-
-        if (isset($tip)){
-
-            $questions = Question::with(['subject','tips'=>function ($q) use($tip_id){
-
-                return $q->where('tips.id',$tip_id);
-            }])->get();
-
+        if (isset($questions) && $questions->count() > 0)
+        {
 
 
             $questions = QuestionSelectedResource::collection($questions);
@@ -121,7 +125,7 @@ class QuestionsController extends Controller
             return $this->responseJson($questions,null,true);
         }
 
-        return $this->responseJson(null,'لا يوجد اسئلة خاصة بهذة الملاحظة',false);
+        return $this->responseJson($questions,'لا يوجد اسئلة خاصة بهذة الملاحظة',true);
 
 
 

@@ -35,7 +35,7 @@ class PrescriptionController extends Controller
         if (isset($prescriptions)& $prescriptions->count()>0){
             return $this->responseJson($prescriptions,null,true);
         }
-        return $this->responseJson(null,'لا توجد روشتات حتى الان',false);
+        return $this->responseJson($prescriptions,'لا توجد روشتات حتى الان',true);
 
     }
 

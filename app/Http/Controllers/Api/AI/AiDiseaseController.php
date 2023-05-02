@@ -27,7 +27,7 @@ class AiDiseaseController extends Controller
             if (isset($diseases)& $diseases->count()>0){
                 return $this->responseJson($diseases,null,true);
             }
-            return $this->responseJson(null,'لا يوجد اي عمليات تنباء فى سجل الامراض حتى الان',false);
+            return $this->responseJson($diseases,'لا يوجد اي عمليات تنباء فى سجل الامراض حتى الان',true);
         }
 
 

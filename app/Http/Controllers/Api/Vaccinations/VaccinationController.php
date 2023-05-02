@@ -28,8 +28,12 @@ class VaccinationController extends Controller
 
         $vaccinations = UserVaccinationResource::collection($vaccinations);
 
+        if(isset($vaccinations) && $vaccinations->count() > 0)
+        {
+            return $this->responseJson($vaccinations,null,true);
 
-        return $this->responseJson($vaccinations,null,true);
+        }
+        return $this->responseJson($vaccinations,'لا يوجد تطعيمات حتى الان',true);
     }
 
 
@@ -48,7 +52,7 @@ class VaccinationController extends Controller
             return $this->responseJson(new SigleVaccinationResource($vaccine),null,true);
         }
 
-        return $this->responseJson(null,'لا يوجد تطعيم بهذا المعرف',true);
+        return $this->responseJson(null,'لا يوجد تطعيم بهذا المعرف',false);
 
     }
 

@@ -29,7 +29,7 @@ class TeethDevelopmentController extends Controller
 
                return $this->responseJson(TeethResource::collection($teeth_devs) ,null,true);
            }
-           return $this->responseJson(null,'لا يوجد سجل للاسنان حتى الان',false);
+           return $this->responseJson($teeth_devs,'لا يوجد سجل للاسنان حتى الان',true);
        }
 
        public function get_single_teeth($teeth_id){
@@ -41,7 +41,7 @@ class TeethDevelopmentController extends Controller
            }
 
 
-           return $this->responseJson(null,'لا توجد سنة بهذا المعرف',false);
+           return $this->responseJson(null,'لا توجد سنة بهذا المعرف',true);
 
        }
 
@@ -119,7 +119,7 @@ class TeethDevelopmentController extends Controller
 
             }
 
-            return $this->responseJson($teeth,'لا يمكن التعديل على عنصر غير موجود',false);
+            return $this->responseJson(null,'لا يمكن التعديل على عنصر غير موجود',false);
 
 
         }

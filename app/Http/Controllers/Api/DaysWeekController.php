@@ -22,6 +22,6 @@ class DaysWeekController extends Controller
 
             return $this->responseJson($days,null,true);
         }
-        return $this->responseJson(null,'لا يوجد ايام اسبوع مسجلة حتى الان',false);
+        return $this->responseJson($days,'لا يوجد ايام اسبوع مسجلة حتى الان',true);
     }
 }

@@ -21,7 +21,7 @@ class TeethController extends Controller
             return $this->responseJson($teeths,null,true);
         }
 
-        return $this->responseJson(null,'لم يتم اضافة الاسنان الطبية حتى الان',false);
+        return $this->responseJson($teeths,'لم يتم اضافة الاسنان الطبية حتى الان',true);
 
 
 
