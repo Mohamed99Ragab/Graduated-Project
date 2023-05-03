@@ -28,6 +28,10 @@ class NotificationsResource extends JsonResource
 
             $type = 'الاسنان';
         }
+        elseif ($type == 'DevelopmentFollowNotification'){
+
+            $type = 'التطور';
+        }
 
 
         return [

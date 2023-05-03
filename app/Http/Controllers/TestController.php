@@ -29,17 +29,41 @@ class TestController extends Controller
     public function test()
     {
 
-        $user = User::find(1);
-        $vaccine = Vaccination::find(1);
-        $date_now = date_format(Carbon::now(),'Y-m-d');
-        $birth_date = $user->birth_date;
+        $users = User::all();
 
-        $ages = $this->calc_child_age($birth_date,$date_now);
+        foreach ($users as $user){
 
-        $vaccine_date = date_format(Carbon::parse($birth_date)->addMonths($vaccine->vaccine_age - $ages['months'])->subDays(2),'Y-m-d');
+            $reminders = MedicationReminder::where('user_id',$user->id)->where('appointment','اسبوعيا')->get();
 
-//        return $ages['months'];
-        return $vaccine_date;
+            foreach ($reminders as $reminder){
+                if ($reminder->end_date > date_format(Carbon::now(),'Y-m-d')) {
+
+
+
+                    $times = $reminder->medcineTimes;
+
+                    foreach ($times as $time) {
+                        $days = $time->medicinedays;
+
+                        foreach ($days as $day) {
+
+
+                            if ($day->day == Carbon::now()->dayName && date_format(Carbon::parse($time->time), 'h') == date_format(Carbon::now()->addHour(), 'h')) {
+
+
+                                $user->notify(new MedicationReminderNotification('تذكير موعد العلاج', " موعد اخذ الدواء " . $reminder->medicine_name . " الان"));
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+
+
+
 
     }
 }
