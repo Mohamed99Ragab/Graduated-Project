@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NotificationsResource extends JsonResource
@@ -39,7 +40,7 @@ class NotificationsResource extends JsonResource
 
             'title'=>$this->data['title'],
             'body'=>$this->data['body'],
-            'created_at'=>date_format($this->created_at,'d/m/Y h:i:s'),
+            'created_at'=>date_format(Carbon::parse($this->created_at)->addHour(),'d/m/Y g:i a'),
             'type'=>$type
 
 

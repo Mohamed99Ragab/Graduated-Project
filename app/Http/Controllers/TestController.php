@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Vaccination;
 use App\Notifications\MedicationReminderNotification;
 use App\Notifications\TeethReminderNotification;
+use App\Notifications\VaccinationReminderNotification;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -28,38 +29,28 @@ class TestController extends Controller
 
     public function test()
     {
-
         $users = User::all();
+        $date_now = date_format(Carbon::now(),'Y-m-d');
+
 
         foreach ($users as $user){
 
-            $reminders = MedicationReminder::where('user_id',$user->id)->where('appointment','اسبوعيا')->get();
 
-            foreach ($reminders as $reminder){
-                if ($reminder->end_date > date_format(Carbon::now(),'Y-m-d')) {
+            foreach ($user->unreadNotifications as $notification) {
 
+//                if( date_format(Carbon::parse($notification->created_at)->addDays(7),'Y-m-d') == $date_now ){
 
+                    $notification->delete();
 
-                    $times = $reminder->medcineTimes;
+                    return 'ok';
 
-                    foreach ($times as $time) {
-                        $days = $time->medicinedays;
-
-                        foreach ($days as $day) {
-
-
-                            if ($day->day == Carbon::now()->dayName && date_format(Carbon::parse($time->time), 'h') == date_format(Carbon::now()->addHour(), 'h')) {
-
-
-                                $user->notify(new MedicationReminderNotification('تذكير موعد العلاج', " موعد اخذ الدواء " . $reminder->medicine_name . " الان"));
-                            }
-                        }
-                    }
-                }
+//                }
             }
 
-
         }
+
+
+
 
 
 

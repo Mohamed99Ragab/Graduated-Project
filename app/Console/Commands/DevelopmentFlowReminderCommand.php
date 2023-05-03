@@ -56,7 +56,7 @@ class DevelopmentFlowReminderCommand extends Command
 
 
 
-            $questions =   Question::where('age_stage',$ages['month'])->get();
+            $questions =   Question::where('age_stage',$ages['months'])->get();
 
             if (isset($questions) && $questions->count() > 0)
             {
