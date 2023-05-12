@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\DeleteOldNotificationCommand;
 use App\Console\Commands\DevelopmentFlowReminderCommand;
+use App\Console\Commands\growthCommand;
 use App\Console\Commands\MedicationReminderCommand;
 use App\Console\Commands\MedicationReminderMonthlyCommand;
 use App\Console\Commands\MedicationReminderWeeklyCommand;
@@ -27,7 +28,8 @@ class Kernel extends ConsoleKernel
         MedicationReminderMonthlyCommand::class,
         TeethReminderCommand::class,
         DevelopmentFlowReminderCommand::class,
-        DeleteOldNotificationCommand::class
+        DeleteOldNotificationCommand::class,
+        growthCommand::class,
     ];
     protected function schedule(Schedule $schedule)
     {
@@ -39,6 +41,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('teeth:reminder')->monthlyOn(1,'12:00');
         $schedule->command('devflow:notify')->monthlyOn(1,'10:00');
         $schedule->command('delete:oldNotify')->daily();
+        $schedule->command('growth:reminder')->monthly();
 
     }
 

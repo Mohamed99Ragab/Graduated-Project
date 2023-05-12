@@ -10,6 +10,7 @@ use App\Http\Resources\Reports\TeethReportResource;
 use App\Http\Resources\Reports\vaccineReportResource;
 use App\Http\Traits\HttpResponseJson;
 use App\Models\AiDisease;
+use App\Models\Growth;
 use App\Models\MedicalDetail;
 use App\Models\Result;
 use App\Models\TeethDevelopment;
@@ -81,9 +82,11 @@ class ReportController extends Controller
 
     public function vaccinationsReport(){
 
-        $user = User::find(Auth::guard('api')->id());
 
-        $vaccinations = $user->vaccinations;
+        $vaccinations =  Vaccination::whereHas('userVaccines',function ($q){
+            return $q->where('user_id',Auth::guard('api')->id())->where('status',1);
+        })->get();
+
 
         if(isset($vaccinations) && $vaccinations->count()>0) {
 
@@ -116,6 +119,20 @@ class ReportController extends Controller
 
 
     }
+
+
+    public function growthReport()
+    {
+        $growth = Growth::where('user_id',Auth::guard('api')->id())->latest()->first();
+
+        if(!empty($growth)){
+
+            return $this->responseJson($growth,null,true);
+        }
+
+        return $this->responseJson(null,'لا يوجد سجل مرضي خاص بنمو الطفل حتى الان',true);
+    }
+
 
 
 }

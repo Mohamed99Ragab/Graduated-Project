@@ -81,7 +81,7 @@
                         @foreach($tips as $tip)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$tip->description}}</td>
+                                <td>{{ Str::limit($tip->description,50)}}</td>
                                 <td>
 
 

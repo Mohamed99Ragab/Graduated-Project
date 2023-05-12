@@ -36,6 +36,10 @@ class Vaccination extends Model
         return $this->belongsToMany(User::class,'user_vaccination','vaccination_id','user_id');
     }
 
+    public function userVaccines(){
+
+        return $this->hasMany(UserVaccination::class,'vaccination_id');
+    }
 
 
 

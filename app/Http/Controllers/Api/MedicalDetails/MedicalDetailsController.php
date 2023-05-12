@@ -20,23 +20,25 @@ class MedicalDetailsController extends Controller
     public function storeMedicalDetails(StoreMedicalDetailsRequest $request){
 
         try {
+            $medical_info = MedicalDetail::where('user_id',Auth::guard('api')->id())->first();
 
-            MedicalDetail::create([
-                'user_id'=>Auth::guard('api')->id(),
-                'blood_type'=>$request->blood_type,
-                'allergy'=>$request->allergy,
-                'skin_disease'=>$request->skin_disease,
-                'chronic_disease'=>$request->chronic_disease,
-                'genetic_disease'=>$request->genetic_disease,
-                'Is_medicine'=>$request->Is_medicine,
-                'medicine_file'=> $request->hasFile('medicine_file') ? $request->file('medicine_file')->hashName():null
-            ]);
+            if(empty($medical_info)){
+                MedicalDetail::create([
+                    'user_id'=>Auth::guard('api')->id(),
+                    'blood_type'=>$request->blood_type,
+                    'allergy'=>$request->allergy,
+                    'skin_disease'=>$request->skin_disease,
+                    'chronic_disease'=>$request->chronic_disease,
+                    'genetic_disease'=>$request->genetic_disease,
+                    'Is_medicine'=>$request->Is_medicine,
+                ]);
 
-            //upload medicine file if found
-            $this->uploadImage($request->file('medicine_file'),'medicains','images');
 
-//        return response()->json(['message'=>'تم الحفظ بنجاح'],'201');
-            return $this->responseJson(null,'تم الحفظ بنجاح',true);
+                return $this->responseJson(null,'تم الحفظ بنجاح',true);
+            }
+            return $this->responseJson(null,'عذرا يمكنك اضافة التفاصيل الطبية مرة واحدة فقط',false);
+
+
         }
         catch (\Exception $e){
 
@@ -46,7 +48,50 @@ class MedicalDetailsController extends Controller
 
     }
 
+    public function updateMedicalDetails(StoreMedicalDetailsRequest $request){
 
+        try {
+
+
+            $medical_info = MedicalDetail::where('user_id',Auth::guard('api')->id())->first();
+            if(!empty($medical_info))
+            {
+
+                $medical_info->update([
+                    'blood_type'=>$request->blood_type,
+                    'allergy'=>$request->allergy,
+                    'skin_disease'=>$request->skin_disease,
+                    'chronic_disease'=>$request->chronic_disease,
+                    'genetic_disease'=>$request->genetic_disease,
+                    'Is_medicine'=>$request->Is_medicine,
+                ]);
+
+                return $this->responseJson(null,'تم تحديث البيانات بنجاح',true);
+
+            }
+            return $this->responseJson(null,'لا يوجد تفاصيل طبية لاتمام العملية',false);
+
+
+        }
+        catch (\Exception $e){
+
+            return $this->responseJson($e->getMessage(),'حدث خطاء ما الرجاء المحاولة مرة اخرى',false);
+
+        }
+
+    }
+
+    public function showMedicalDetails()
+    {
+        $medical_info = MedicalDetail::where('user_id',Auth::guard('api')->id())->first();
+
+        if (!empty($medical_info))
+        {
+            return $this->responseJson($medical_info,null,true);
+        }
+        return $this->responseJson(null,'لا توجد تفاصيل طبية مضافة',true);
+
+    }
 
 
     public function all_allergies(){

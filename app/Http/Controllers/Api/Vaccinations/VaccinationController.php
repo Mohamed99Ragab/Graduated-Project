@@ -8,6 +8,7 @@ use App\Http\Resources\UserVaccinationResource;
 use App\Http\Traits\ChildTrait;
 use App\Http\Traits\HttpResponseJson;
 use App\Models\User;
+use App\Models\UserVaccination;
 use App\Models\Vaccination;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,9 +23,15 @@ class VaccinationController extends Controller
 
     public function index(){
 
-        $vaccinations =  Vaccination::with(['users'=>function ($q){
+
+
+        $vaccinations =  Vaccination::with(['userVaccines'=>function ($q){
             return $q->where('user_id',Auth::guard('api')->id());
         }])->get();
+
+
+
+
 
         $vaccinations = UserVaccinationResource::collection($vaccinations);
 
@@ -40,7 +47,8 @@ class VaccinationController extends Controller
     public function single_vaccine($vaccination_id){
 
 
-        $vaccine = Vaccination::with(['users'=>function ($q){
+
+        $vaccine = Vaccination::with(['userVaccines'=>function ($q){
             return $q->where('user_id',Auth::guard('api')->id());
         }])->find($vaccination_id);
 
@@ -61,15 +69,15 @@ class VaccinationController extends Controller
     public function attach_vaccines_to_user(Request $request){
 
 
+
         $rules = [
-            'vaccination_ids.*'=>'required|exists:vaccinations,id',
-            'vaccination_ids'=>'array'
+            'vaccination_id'=>'required|exists:vaccinations,id',
+
         ];
 
         $messages = [
-            'vaccination_ids.*.required'=>'هذا الحقل مطلوب',
-            'vaccination_ids.array'=>'يجب ان يكون هذا الحقل عبارة عن مصفوفة',
-            'vaccination_ids.*.exists'=>'عفوا رقم التطعيم غير موجود'
+            'vaccination_id.required'=>'هذا الحقل مطلوب',
+            'vaccination_id.exists'=>'عفوا رقم التطعيم غير موجود'
         ];
 
         $validator = Validator::make($request->all(),$rules,$messages);
@@ -80,11 +88,36 @@ class VaccinationController extends Controller
         }
 
 
-            $user = User::find(Auth::guard('api')->id());
+//            $user = User::find(Auth::guard('api')->id());
 
-            $user->vaccinations()->sync($request->vaccination_ids);
+//            $user->vaccinations()->sync($request->vaccination_ids);
 
-        return $this->responseJson(null,'تم اضافة تلك التطعيمات للمستخدم بنجاح',true);
+            $user_vaccine = UserVaccination::where('vaccination_id',$request->vaccination_id)
+                ->where('user_id',Auth::guard('api')->id())->first();
+
+            if(!empty($user_vaccine) && $user_vaccine->status ==1){
+                $user_vaccine->update([
+                    'status'=>0
+                ]);
+
+                return $this->responseJson(null,'تم ازالة التطعيم بنجاح',true);
+
+            }elseif(!empty($user_vaccine) && $user_vaccine->status ==0)
+            {
+                $user_vaccine->update([
+                    'status'=>1
+                ]);
+
+                return $this->responseJson(null,'تم اضافة التطعيم بنجاح',true);
+            }
+
+             UserVaccination::create([
+                 'user_id'=>Auth::guard('api')->id(),
+                 'vaccination_id'=>$request->vaccination_id,
+                 'status'=>1
+             ]);
+
+            return $this->responseJson(null,'تم اضافة التطعيم بنجاح',true);
 
 
     }

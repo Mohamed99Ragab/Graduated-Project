@@ -20,10 +20,19 @@ class UserVaccinationResource extends JsonResource
     public function toArray($request)
     {
 
-        $user_vac = [];
-        foreach ($this->users as $user_vaccine){
-            $user_vac [] = $user_vaccine->pivot->vaccination_id;
+
+        $status = 0;
+        foreach ($this->userVaccines as $user_vaccine){
+            if( $user_vaccine->status == 0){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
         }
+
+
+
+
 
         //  calc proposed vaccine date
         $proposed_vaccination_date = date_format(Carbon::now()->addMonths($this->vaccine_age),'Y-m-d');
@@ -36,7 +45,7 @@ class UserVaccinationResource extends JsonResource
         $ages = $this->calc_child_age($birth_date,$date_now);
 
         // calc vaccine date
-        if($this->vaccine_age ==$ages['months'])
+        if($this->vaccine_age == $ages['months'])
         {
             $this->vaccination_date = $date_now;
 
@@ -59,8 +68,10 @@ class UserVaccinationResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'prevention'=>$this->disease_prevention,
+            'about'=>$this->about,
+            'side_effects'=>$this->side_effects,
             'vaccine_age'=>$this->vaccine_age,
-            'status'=>!empty($user_vac) ? 1 :0,
+            'status'=>$status,
             'important'=>$this->important,
             'number_syringe'=>$this->number_syringe,
             'proposed_vaccination_date'=>$proposed_vaccination_date,

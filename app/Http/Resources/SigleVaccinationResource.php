@@ -16,9 +16,13 @@ class SigleVaccinationResource extends JsonResource
 
     public function toArray($request)
     {
-        $user_vac = [];
-        foreach ($this->users as $user_vaccine){
-            $user_vac [] = $user_vaccine->pivot->vaccination_id;
+        $status = 0;
+        foreach ($this->userVaccines as $user_vaccine){
+            if( $user_vaccine->status == 0){
+                $status = 0;
+            }else{
+                $status = 1;
+            }
         }
 
         //  calc proposed vaccine date
@@ -59,7 +63,7 @@ class SigleVaccinationResource extends JsonResource
             'about'=>$this->about,
             'side_effects'=>$this->side_effects,
             'number_syringe'=>$this->number_syringe,
-            'status'=>!empty($user_vac) ? 1 :0,
+            'status'=>$status,
             'important'=>$this->important,
             'proposed_vaccination_date'=>$proposed_vaccination_date,
             'vaccination_date'=>$this->vaccination_date,

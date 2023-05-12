@@ -5,33 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MedicalDetail extends Model
+class Growth extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'weight',
+        'height',
         'user_id',
-        'blood_type',
-        'allergy',
-        'chronic_disease',
-        'skin_disease',
-        'genetic_disease',
-        'Is_medicine',
+        'weight_status',
+        'height_status',
+        'measure_date',
         'created_at',
         'updated_at'
-
     ];
 
     protected $hidden = [
+        'user_id',
         'created_at',
         'updated_at'
     ];
 
-
-    public function user(){
-
-        return $this->belongsTo(User::class,'user_id');
-    }
 
 
 }

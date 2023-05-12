@@ -22,7 +22,6 @@ class CreateMedicalDetailsTable extends Migration
             $table->string('chronic_disease')->nullable()->default('لا توجد امراض مزمنة');
             $table->string('genetic_disease')->nullable()->default('لا توجد اي امراض وراثية');
             $table->string('Is_medicine')->nullable()->default('لا توجد اي ادوية سابقة');
-            $table->string('medicine_file')->nullable();
             $table->timestamps();
         });
     }

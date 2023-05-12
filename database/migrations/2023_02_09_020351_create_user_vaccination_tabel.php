@@ -17,7 +17,8 @@ class CreateUserVaccinationTabel extends Migration
             $table->id();
             $table->foreignId('vaccination_id')->references('id')->on('vaccinations')->cascadeOnDelete();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-
+            // status 0 => means that user not attach vaccine yet , 1 => user is attach vaccine
+            $table->tinyInteger('status')->default(0)->comment('0 => not attach vaccine , 1=> attach vaccine');
         });
     }
 

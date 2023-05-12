@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\SocialAuthController;
 use App\Http\Controllers\Api\Auth\UpdateProfile;
 use App\Http\Controllers\Api\DaysWeekController;
 use App\Http\Controllers\Api\DevelopmentFollow\QuestionsController;
+use App\Http\Controllers\Api\Growth\GrowthController;
 use App\Http\Controllers\Api\MedicalDetails\MedicalDetailsController;
 use App\Http\Controllers\Api\MedicalTests\MedicalTestController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
@@ -74,7 +75,9 @@ Route::group(['middleware'=>'jwt.verify'],function (){
 
 
     // medical details
+    Route::get('medicalDetails',[MedicalDetailsController::class,'showMedicalDetails']);
     Route::post('store-medical-details',[MedicalDetailsController::class,'storeMedicalDetails']);
+    Route::post('medicalDetails',[MedicalDetailsController::class,'updateMedicalDetails']);
     Route::get('all-allergies',[MedicalDetailsController::class,'all_allergies']);
     Route::get('chronic-diseases',[MedicalDetailsController::class,'all_chronic']);
     Route::get('skin-diseases',[MedicalDetailsController::class,'all_skin']);
@@ -152,6 +155,8 @@ Route::group(['middleware'=>'jwt.verify'],function (){
 
     Route::get('disease-report',[ReportController::class,'aiDiseaseReport']);
 
+    Route::get('growth-report',[ReportController::class,'growthReport']);
+
 
 
 
@@ -164,7 +169,9 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     Route::get('history-notify',[NotificationController::class,'history_of_notidfication']);
     Route::get('mark-as-read',[NotificationController::class,'mark_all_notificatis_as_read']);
 
-
+    //   Growth of weights and heights
+    Route::get('growth',[GrowthController::class,'index']);
+    Route::post('calc-growth',[GrowthController::class,'calcGrowth']);
 
 
 

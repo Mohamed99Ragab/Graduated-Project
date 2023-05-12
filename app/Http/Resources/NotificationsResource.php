@@ -34,6 +34,11 @@ class NotificationsResource extends JsonResource
             $type = 'التطور';
         }
 
+        elseif ($type == 'growthNotification'){
+
+            $type = 'النمو';
+        }
+
 
         return [
 

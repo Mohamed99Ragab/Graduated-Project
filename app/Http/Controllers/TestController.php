@@ -29,27 +29,6 @@ class TestController extends Controller
 
     public function test()
     {
-        $users = User::all();
-        $date_now = date_format(Carbon::now(),'Y-m-d');
-
-
-        foreach ($users as $user){
-
-
-            foreach ($user->unreadNotifications as $notification) {
-
-//                if( date_format(Carbon::parse($notification->created_at)->addDays(7),'Y-m-d') == $date_now ){
-
-                    $notification->delete();
-
-                    return 'ok';
-
-//                }
-            }
-
-        }
-
-
 
 
 

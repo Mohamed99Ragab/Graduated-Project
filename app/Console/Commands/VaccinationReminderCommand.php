@@ -60,15 +60,16 @@ class VaccinationReminderCommand extends Command
 
 
                 // this query to get vaccines that same age of user and user no take this vaccines
-                // دا استعلام لجلب التطعيمات التى نفس الفترة العمرية للطفل و لم ياخدها الطفل حتى الان
+                // دا استعلام لجلب التطعيمات التى لم ياخدها الطفل حتى الان
 
-                $vaccinations = Vaccination::where('vaccine_age',$ages['months'])->whereDoesntHave('users',function ($q)use($user){
-                    return $q->where('user_id',$user->id);
+                $vaccinations = Vaccination::whereDoesntHave('userVaccines',function ($q) use ($user) {
+                    return $q->where('user_id',$user->id)->where('status',1);
                 })->get();
 
                 if(isset($vaccinations) & $vaccinations->count() >0){
 
                     foreach ($vaccinations as $vaccination){
+
 
                         if(date_format(Carbon::parse($birth_date)->addMonths($vaccination->vaccine_age - $ages['months'])->subDays(1),'Y-m-d') == $date_now)
                         {
