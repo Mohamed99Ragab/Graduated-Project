@@ -38,7 +38,7 @@
                         <div class="card-body">
 
                             <h5 class="card-title mr-3"style="display: inline-block">{{$vaccine->name}}</h5><span class="badge badge-{{$vaccine->important == 1 ? 'primary':'warning'}}">{{$vaccine->important == 1 ? 'مهم':'غير مهم'}}</span>
-                            <p class="card-text">{{substr($vaccine->about,0,350)}}.</p>
+                            <p class="card-text"> {{ Str::limit($vaccine->about,125)}}</p>
                             <div class="row">
                                 <div class="col">
                                     <p class="card-text"style="display: inline-block"><small class="text-muted">عدد الحقن المطلوبة:</small></p>

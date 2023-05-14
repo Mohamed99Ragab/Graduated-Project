@@ -29,6 +29,7 @@ class RegisterReguest extends FormRequest
         return [
             'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
             'email' => 'required|string|email|unique:users,email',
+            'phone_number' => 'digits:11|unique:users,phone_number',
             'photo' => 'image',
             'gender' => 'required|string|in:ذكر,انثى',
             'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
@@ -46,6 +47,8 @@ class RegisterReguest extends FormRequest
             'email.required' => 'يرجي ادخال الايميل',
             'email.email' => 'يجب ان يكون هذا الحقل من نوع ايميل',
             'email.unique' => 'هذا الايميل مستخدم من قبل',
+            'phone_number.digits'=>'يجب ان يتكون رقم الموبيل من 11 رقم',
+            'phone_number.unique'=>'هذا الرقم مسجل من قبل',
             'password.required' => 'يرجى ادخال كلمة المرور اولا',
             'password.min' => 'يجب الا يقل الباسورد عن 8 احرف',
             'password.confirmed' => 'يجب ان يتطابق حقل تاكيد الباسورد مع الباسورد',

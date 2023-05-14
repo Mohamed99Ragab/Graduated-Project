@@ -27,30 +27,100 @@ class AuthController extends Controller
 
     public function login(LoginReguest $request){
 
+        if(is_numeric($request->email_or_phone)) {
 
-        DB::beginTransaction();
+            $rules = [
+                'email_or_phone' => 'digits:11|exists:users,phone_number',
+            ];
 
-        try{
+            $messages = [
+                'email_or_phone.digits' => 'يجب ان يتكون رقم الموبيل من 11 رقم',
+                'email_or_phone.exists' => 'هذا الرقم غير مسجل لدينا'
+            ];
 
-            if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
+            $validator = Validator::make($request->all(), $rules, $messages);
 
-                return $this->responseJson(null,'خطاء في بيانات الدخول',false);
+            if ($validator->fails()) {
+                return $this->responseJson(null, $validator->errors()->first(), false);
             }
 
-            // add devive token to user
-            DeviceToken::updateOrCreate(
-                ['token' => $request->fcm_token],
-                ['user_id' => Auth::guard('api')->id()]
-            );
 
-            DB::commit();
-            return $this->createNewToken($token);
+
+            DB::beginTransaction();
+
+            try{
+
+                if (! $token = auth()->attempt(['phone_number'=>$request->email_or_phone,'password'=>$request->password])) {
+
+                    return $this->responseJson(null,'خطاء في بيانات الدخول',false);
+                }
+
+                // add devive token to user
+                DeviceToken::updateOrCreate(
+                    ['token' => $request->fcm_token],
+                    ['user_id' => Auth::guard('api')->id()]
+                );
+
+                DB::commit();
+                return $this->createNewToken($token);
+            }
+
+            catch (\Exception $e){
+
+                DB::rollback();
+            }
+
+
+        }
+        else{
+
+            $rules = [
+                'email_or_phone' => 'email|exists:users,email',
+            ];
+
+            $messages = [
+                'email_or_phone.email' => 'يجب ان يكون هذا الحقل من نوع ايميل',
+                'email_or_phone.exists' => 'هذا الايميل غير مسجل من قبل',
+            ];
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+
+            if ($validator->fails()) {
+                return $this->responseJson(null, $validator->errors()->first(), false);
+            }
+
+
+            DB::beginTransaction();
+
+            try{
+
+                if (! $token = auth()->attempt(['email'=>$request->email_or_phone,'password'=>$request->password])) {
+
+                    return $this->responseJson(null,'خطاء في بيانات الدخول',false);
+                }
+
+                // add devive token to user
+                DeviceToken::updateOrCreate(
+                    ['token' => $request->fcm_token],
+                    ['user_id' => Auth::guard('api')->id()]
+                );
+
+                DB::commit();
+                return $this->createNewToken($token);
+            }
+
+            catch (\Exception $e){
+
+                DB::rollback();
+            }
         }
 
-        catch (\Exception $e){
 
-            DB::rollback();
-        }
+
+
+
+
+
 
     }
 
@@ -58,53 +128,51 @@ class AuthController extends Controller
     public function register(RegisterReguest $request) {
 
 
-        DB::beginTransaction();
+            DB::beginTransaction();
 
-        try {
-
-
+            try {
 
 
 
-            $user = User::create([
-                'name'=> $request->name,
-                'email'=>$request->email,
-                'gender'=>$request->gender,
-                'birth_date'=>$request->birth_date,
-                'password'=>Hash::make($request->password),
+                $user = User::create([
+                    'name'=> $request->name,
+                    'email'=>$request->email,
+                    'phone_number'=>$request->phone_number,
+                    'gender'=>$request->gender,
+                    'birth_date'=>$request->birth_date,
+                    'password'=>Hash::make($request->password),
 
-                //save image path in database with check if request file
-                'photo'=>$request->file('photo') ? $request->file('photo')->hashName():null
-            ]);
+                    //save image path in database with check if request file
+                    'photo'=>$request->file('photo') ? $request->file('photo')->hashName():null
+                ]);
 
-            //to upload photo on server
-            $this->uploadImage($request->file('photo'),'users','images');
+                //to upload photo on server
+                $this->uploadImage($request->file('photo'),'users','images');
 
 
 
-            if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
+                if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
 
-                return $this->responseJson(null,'خطاء في عملية الدخول',false);
+                    return $this->responseJson(null,'خطاء في عملية الدخول',false);
+                }
+
+                // add devive token to user
+                DeviceToken::create([
+                    'token' => $request->fcm_token,
+                    'user_id' => Auth::guard('api')->id()
+                ]);
+
+                DB::commit();
+                return $this->createNewToken($token);
+
+
             }
 
-            // add devive token to user
-            DeviceToken::create([
-                'token' => $request->fcm_token,
-                'user_id' => Auth::guard('api')->id()
-            ]);
+            catch (\Exception $e){
 
-            DB::commit();
-            return $this->createNewToken($token);
-
-
-        }
-
-        catch (\Exception $e){
-
-            DB::rollback();
-            return $this->responseJson($e->getMessage(),'الرجاء المحاوالة مرة اخرى',false);
-        }
-
+                DB::rollback();
+                return $this->responseJson($e->getMessage(),'الرجاء المحاوالة مرة اخرى',false);
+            }
 
 
 

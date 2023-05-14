@@ -16,7 +16,7 @@ class CreateTipsQuestionTable extends Migration
         Schema::create('tips_question', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tips_id')->references('id')->on('tips')->cascadeOnDelete();
-            $table->foreignId('question_id')->references('id')->on('questions');
+            $table->foreignId('question_id')->references('id')->on('questions')->cascadeOnDelete();
         });
     }
 

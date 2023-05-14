@@ -21,6 +21,7 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'phone_number',
         'password',
         'gender',
         'photo',
@@ -74,6 +75,13 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims() {
         return [];
+    }
+
+
+//    twillow sms get phone number that code is sent to it when rest password
+    public function routeNotificationForTwilio()
+    {
+        return $this->phone_number;
     }
 
 ################### relationship between user and deviceTokens ##############

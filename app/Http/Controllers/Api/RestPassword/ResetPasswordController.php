@@ -31,7 +31,14 @@ class ResetPasswordController extends Controller
         }
 
         // find user's email
-        $user = User::firstWhere('email', $passwordReset->email);
+        if(is_numeric($passwordReset->email)){
+
+            $user = User::firstWhere('phone_number', $passwordReset->email);
+        }else{
+
+            $user = User::firstWhere('email', $passwordReset->email);
+
+        }
 
         // update user password
         $user->update([

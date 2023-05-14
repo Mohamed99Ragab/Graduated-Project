@@ -26,7 +26,7 @@ class LoginReguest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|exists:users,email',
+            'email_or_phone' => 'required',
             'password' => 'required|string',
             'fcm_token'=>'required'
         ];
@@ -36,9 +36,7 @@ class LoginReguest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'=>'يرجي ادخال الايميل',
-            'email.email'=>'يجب ان يكون هذا الحقل من نوع ايميل',
-            'email.exists'=>'هذا الايميل غير موجود الرجاء عمل حساب اولا',
+            'email_or_phone.required'=>'يرجى ادخال رقم الموبيل او الايميل',
             'password.required'=>'يرجى ادخال كلمة المرور اولا',
             'fcm_token'=>'هذا الحقل مطلوب'
 

@@ -18,6 +18,7 @@ class UserAuth extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'email'=>$this->email,
+            'phone_number'=>$this->phone_number,
             'gender'=>$this->gender,
             'birth_date'=>$this->birth_date,
             'is_reminder_vaccine'=>$this->is_reminder_vaccine,

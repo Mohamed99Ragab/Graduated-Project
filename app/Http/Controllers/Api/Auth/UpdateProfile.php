@@ -31,6 +31,7 @@ class UpdateProfile extends Controller
            // make update new data
            $user->name = $request->name;
            $user->email = $request->email;
+           $user->phone_number = $request->phone_number;
            $user->gender = $request->gender;
            $user->birth_date = $request->birth_date;
 

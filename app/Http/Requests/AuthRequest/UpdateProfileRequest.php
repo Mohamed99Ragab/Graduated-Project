@@ -24,6 +24,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
             'email' => 'required|string|email|unique:users,email,'.Auth::guard('api')->id(),
+            'phone_number'=>'digits:11|unique:users,phone_number,'.Auth::guard('api')->id(),
             'photo' => 'image',
             'gender' => 'required|string|in:ذكر,انثى',
             'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
