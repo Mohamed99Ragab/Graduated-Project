@@ -23,7 +23,7 @@ class MedicalDetailsController extends Controller
             $medical_info = MedicalDetail::where('user_id',Auth::guard('api')->id())->first();
 
             if(empty($medical_info)){
-                MedicalDetail::create([
+                $medical_info =  MedicalDetail::create([
                     'user_id'=>Auth::guard('api')->id(),
                     'blood_type'=>$request->blood_type,
                     'allergy'=>$request->allergy,
@@ -34,7 +34,7 @@ class MedicalDetailsController extends Controller
                 ]);
 
 
-                return $this->responseJson(null,'تم الحفظ بنجاح',true);
+                return $this->responseJson($medical_info,'تم الحفظ بنجاح',true);
             }
             return $this->responseJson(null,'عذرا يمكنك اضافة التفاصيل الطبية مرة واحدة فقط',false);
 
@@ -66,7 +66,7 @@ class MedicalDetailsController extends Controller
                     'Is_medicine'=>$request->Is_medicine,
                 ]);
 
-                return $this->responseJson(null,'تم تحديث البيانات بنجاح',true);
+                return $this->responseJson($medical_info,'تم تحديث البيانات بنجاح',true);
 
             }
             return $this->responseJson(null,'لا يوجد تفاصيل طبية لاتمام العملية',false);
@@ -94,41 +94,5 @@ class MedicalDetailsController extends Controller
     }
 
 
-    public function all_allergies(){
-
-        $allergies = DB::table('allergies')->select('allergy')->get();
-
-        return $this->responseJson($allergies->toArray(),null,true);
-
-
-    }
-
-    public function all_chronic(){
-
-        $chronic_diseases = DB::table('chronic_diseases')->select('disease')->get();
-
-        return $this->responseJson($chronic_diseases,null,true);
-
-
-    }
-
-    public function all_skin(){
-
-        $skin_diseases = DB::table('skin_diseases')->select('disease')->get();
-
-        return $this->responseJson($skin_diseases->toArray(),null,true);
-
-
-    }
-
-
-    public function all_genetic(){
-
-        $genetic_diseases = DB::table('genetic_diseases')->select('disease')->get();
-
-        return $this->responseJson($genetic_diseases,null,true);
-
-
-    }
 
 }

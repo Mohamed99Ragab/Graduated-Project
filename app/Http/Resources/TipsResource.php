@@ -2,7 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Question;
+use App\Models\Result;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class TipsResource extends JsonResource
 {
@@ -20,10 +23,26 @@ class TipsResource extends JsonResource
             $age_stages[] = $question->age_stage;
         }
 
+
+
+
+            $result = Result::where('tip_id',$this->id)
+                ->where('user_id',Auth::guard('api')->id())
+                ->where('status',0)->pluck('question_id');
+
+            $qusionts_unanswered = Question::select('question')->whereIn('id',$result)->get();
+
+
+
+
+
+
+
         return [
             'id'=>$this->id,
             'description'=>$this->description,
             'age_stage'=>$age_stages[0],
+            'unAnswerQuestions'=>$qusionts_unanswered
 
         ];
     }

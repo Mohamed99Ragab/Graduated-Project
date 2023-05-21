@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\DevelopmentFollow;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DevelopmentFollow\TipsRequest;
+use App\Http\Requests\DevelopmentFollow\updateTipsRequest;
 use App\Http\Resources\QuestionSelectedResource;
 use App\Http\Resources\QuestionSubjectResource;
 use App\Http\Resources\TipsResource;
@@ -51,20 +52,46 @@ class QuestionsController extends Controller
 
             $answers = $request->answers;
 
+            $question_ids = [];
+
         try {
 
 
             foreach ($answers as $answer){
 
-                Result::create([
-                    'user_id'=>Auth::guard('api')->id(),
-                    'question_id'=>$answer['question_id'],
-                    'status'=>$answer['status']
-                ]);
+                if($answer['status']==1){
+                    $question_ids [] = $answer['question_id'];
 
+                }
+
+            }
+
+            $questions = Question::whereIn('id',$question_ids)->get();
+
+            $tip_ids = [];
+            foreach ($questions as $question){
+                $tip_ids [] = $question->tips[0]->id;
 
 
             }
+
+
+            foreach ($tip_ids as $tip_id){
+                foreach ($answers as $answer){
+
+                    Result::create([
+                        'user_id'=>Auth::guard('api')->id(),
+                        'question_id'=>$answer['question_id'],
+                        'tip_id'=>$tip_id,
+                        'status'=>$answer['status']
+
+                    ]);
+
+                }
+            }
+
+
+
             return $this->responseJson(null,'تم حفظ البيانات بنجاح',true);
 
 
@@ -84,16 +111,28 @@ class QuestionsController extends Controller
     public function get_tips_by_question(){
 
 
-        $question_ids = Result::where('user_id',Auth::guard('api')->id())->where('status',1)->pluck('question_id');
 
+
+//        $question_ids = Result::where('user_id',Auth::guard('api')->id())
+//            ->where('status',1)->pluck('question_id');
+
+        $tip_ids = Result::where('user_id',Auth::guard('api')->id())
+           ->pluck('tip_id');
 
         $tips = Tips::with(['questions'=>function($q){
             return $q->select('age_stage');
-        }])->whereHas('questions',function ($q) use ($question_ids){
+        }])->whereIn('id',$tip_ids)->get();
 
-            return $q->whereIn('questions.id',$question_ids);
 
-        })->get();
+//        $tips = Tips::with(['questions'=>function($q){
+//            return $q->select('age_stage');
+//        }])->whereHas('questions',function ($q) use ($question_ids){
+//
+//            return $q->whereIn('questions.id',$question_ids);
+//
+//        })->get();
+
+
 
 
         $tips = TipsResource::collection($tips);
@@ -107,31 +146,31 @@ class QuestionsController extends Controller
     public function selected_questions($tip_id){
 
 
+        $user_questions_results = Result::with(['questions'=>function($q){
 
-//        $tip = Tips::find($tip_id);
-
-        $questions = Question::with(['subject','tips'=>function ($q) use($tip_id){
-
-            return $q->where('tips.id',$tip_id);
-        }])->get();
+            return $q->with('subject');
+        }])
+            ->where('user_id',Auth::guard('api')->id())
+            ->where('tip_id',$tip_id)->get();
 
 
-        if (isset($questions) && $questions->count() > 0)
+
+        if (isset($user_questions_results) && $user_questions_results->count() > 0)
         {
 
 
-            $questions = QuestionSelectedResource::collection($questions);
+            $questions = QuestionSelectedResource::collection($user_questions_results);
 
             return $this->responseJson($questions,null,true);
         }
 
-        return $this->responseJson($questions,'لا يوجد اسئلة خاصة بهذة الملاحظة',true);
+        return $this->responseJson($user_questions_results,'لا يوجد اسئلة خاصة بهذة الملاحظة',true);
 
 
 
     }
 
-    public function update_tips(TipsRequest $request){
+    public function update_tips(updateTipsRequest $request ,$tip_id){
 
 
         $answers = $request->answers;
@@ -147,10 +186,17 @@ class QuestionsController extends Controller
 
 
 
+
+
             $count_items = count($answers);
             for($i = 0; $i<$count_items; $i++)
             {
-                $result = Result::where('question_id',$questions_ids[$i])->where('user_id',Auth::guard('api')->id());
+
+                $result = Result::where('question_id',$questions_ids[$i])
+                    ->where('user_id',Auth::guard('api')->id())
+                    ->where('tip_id',$tip_id)
+                    ->first();
+
                 $result->update([
                     'status' => $answers[$i]['status'],
 

@@ -78,10 +78,6 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     Route::get('medicalDetails',[MedicalDetailsController::class,'showMedicalDetails']);
     Route::post('store-medical-details',[MedicalDetailsController::class,'storeMedicalDetails']);
     Route::post('medicalDetails',[MedicalDetailsController::class,'updateMedicalDetails']);
-    Route::get('all-allergies',[MedicalDetailsController::class,'all_allergies']);
-    Route::get('chronic-diseases',[MedicalDetailsController::class,'all_chronic']);
-    Route::get('skin-diseases',[MedicalDetailsController::class,'all_skin']);
-    Route::get('genetic-diseases',[MedicalDetailsController::class,'all_genetic']);
 
     // medical Tests
     Route::get('all-medical-test',[MedicalTestController::class,'index']);
@@ -141,7 +137,7 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     Route::get('tips-of-user',[QuestionsController::class,'get_tips_by_question']);
     Route::get('get-questions-of-tip/{tip_id}',[QuestionsController::class,'selected_questions']);
 
-    Route::post('update-tips',[QuestionsController::class,'update_tips']);
+    Route::post('update-tips/{tip_id}',[QuestionsController::class,'update_tips']);
 
 
     // Reports Api
@@ -172,7 +168,9 @@ Route::group(['middleware'=>'jwt.verify'],function (){
     //   Growth of weights and heights
     Route::get('growth',[GrowthController::class,'index']);
     Route::post('calc-growth',[GrowthController::class,'calcGrowth']);
-
+    Route::get('range-growth',[GrowthController::class,'calcRangeGrowchOfChild']);
+    Route::post('update-growth/{growth_id}',[GrowthController::class,'updateGrowth']);
+    Route::get('growth/{id}',[GrowthController::class,'getGrowthById']);
 
 
 });

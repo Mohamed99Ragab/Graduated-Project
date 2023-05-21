@@ -60,7 +60,7 @@ class MedicalTestController extends Controller
 
 
 
-            medicalTest::create([
+            $medical_test = medicalTest::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'lab_name'=>$request->lab_name,
                 'type'=>$request->type,
@@ -71,9 +71,9 @@ class MedicalTestController extends Controller
             // upload file on server
             $this->uploadImage($request->file('file'),'tests','images');
 
+            $medical_test_res = new MedicalTestsResource($medical_test);
 
-
-            return $this->responseJson(null,'تم حفظ البيانات بنجاح',true);
+            return $this->responseJson($medical_test_res,'تم حفظ البيانات بنجاح',true);
 
 
         }
@@ -111,7 +111,7 @@ class MedicalTestController extends Controller
           $medical_test->save();
 
             $medical_test_res = new MedicalTestsResource($medical_test);
-         return $this->responseJson(null,'تم تعديل البيانات بنجاح',true);
+         return $this->responseJson($medical_test_res,'تم تعديل البيانات بنجاح',true);
 
         }
         return $this->responseJson(null,'هذا التحليل الذى تحاول تعديله غير موجود',false);

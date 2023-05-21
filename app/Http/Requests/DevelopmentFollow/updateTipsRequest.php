@@ -4,10 +4,8 @@ namespace App\Http\Requests\DevelopmentFollow;
 
 use App\Http\Traits\HttpResponseJson;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
-class TipsRequest extends FormRequest
+class updateTipsRequest extends FormRequest
 {
     use HttpResponseJson;
     public function authorize()
@@ -23,11 +21,7 @@ class TipsRequest extends FormRequest
     public function rules()
     {
         return [
-            'answers.*.question_id'=>[
-                'required',
-                Rule::unique('results')
-                    ->where('user_id', Auth::guard('api')->id())
-            ],
+            'answers.*.question_id'=>'required|exists:results,question_id',
             'answers.*.status'=>'required|in:0,1',
         ];
     }
@@ -36,12 +30,10 @@ class TipsRequest extends FormRequest
     {
         return [
             'answers.*.question_id.required'=>'معرف السؤال مطلوب',
-            'answers.*.question_id.unique'=>'لا يمكن تحديد السؤال اكثر من مرة يمكنك التعديل على الملاحظة',
+            'answers.*.question_id.exists'=>'معرف السؤال غير موجود',
             'answers.*.status.required'=>'حالة السؤال مطلوبة',
             'answers.*.status.in'=>'عذرا يجب ان تكون حالة السؤال فقط 1,0',
 
         ];
     }
-
-
 }

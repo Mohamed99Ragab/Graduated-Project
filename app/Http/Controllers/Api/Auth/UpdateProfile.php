@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest\UpdateProfileRequest;
+use App\Http\Resources\UserAuth;
 use App\Http\Traits\FilesManagement;
 use App\Http\Traits\HttpResponseJson;
 use App\Models\User;
@@ -55,7 +56,7 @@ class UpdateProfile extends Controller
            //to upload new photo on server
            $this->uploadImage($request->file('photo'),'users','images');
 
-           return $this->responseJson($user,'تم التعديل بنجاح',true);
+           return $this->responseJson(new UserAuth($user),'تم التعديل بنجاح',true);
 
        }
        else{

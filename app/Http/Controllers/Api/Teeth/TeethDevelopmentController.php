@@ -64,7 +64,7 @@ class TeethDevelopmentController extends Controller
 
 
 
-            TeethDevelopment::create([
+            $teeth_devs = TeethDevelopment::create([
                 'user_id'=>$user->id,
                 'apperance_date'=>$request->apperance_date,
                 'teeth_id'=>$request->teeth_id,
@@ -74,7 +74,7 @@ class TeethDevelopmentController extends Controller
 
             ]);
 
-            return $this->responseJson(null,'تم حفظ البيانات بنجاح',true);
+            return $this->responseJson(new TeethResource($teeth_devs),'تم حفظ البيانات بنجاح',true);
 
 
 
@@ -105,8 +105,9 @@ class TeethDevelopmentController extends Controller
             //make update
             $teeth = TeethDevelopment::find($teeth_id);
 
+
             if (isset($teeth)){
-                $teeth->update([
+                 $teeth->update([
                     'user_id'=>$user->id,
                     'apperance_date'=>$request->apperance_date,
                     'teeth_id'=>$request->teeth_id,
@@ -115,7 +116,8 @@ class TeethDevelopmentController extends Controller
                     'age_in_days'=>$ages['days'],
                 ]);
 
-                return $this->responseJson(null,'تم تعديل البيانات بنجاح',true);
+
+                return $this->responseJson(new TeethResource($teeth),'تم تعديل البيانات بنجاح',true);
 
             }
 

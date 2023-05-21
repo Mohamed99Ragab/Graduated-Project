@@ -12,6 +12,7 @@ use App\Http\Traits\HttpResponseJson;
 use App\Models\AiDisease;
 use App\Models\Growth;
 use App\Models\MedicalDetail;
+use App\Models\Question;
 use App\Models\Result;
 use App\Models\TeethDevelopment;
 use App\Models\Tips;
@@ -41,18 +42,13 @@ class ReportController extends Controller
 
         $question_ids = Result::where('user_id',Auth::guard('api')->id())->where('status',1)->pluck('question_id');
 
-
-        $tips = Tips::with('questions')->whereHas('questions',function ($q) use ($question_ids){
-
-            return $q->whereIn('questions.id',$question_ids);
-
-        })->latest()->first();
+        $questions = Question::whereIn('id',$question_ids)->get();
 
 
 
-        if(isset($tips) && !empty($tips)) {
+        if(isset($questions) && !empty($questions)) {
 
-            return $this->responseJson(new QuestionsOfLatestTipsResource($tips),null,true);
+            return $this->responseJson( QuestionsOfLatestTipsResource::collection($questions),null,true);
 
         }
         return $this->responseJson(null,'لا توجد ملاحظات لطفلك حتى الان',true);

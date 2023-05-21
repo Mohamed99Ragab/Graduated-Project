@@ -31,4 +31,9 @@ class Tips extends Model
 
     }
 
+    public function results(){
+
+        return $this->hasMany(Result::class,'tip_id');
+    }
+
 }

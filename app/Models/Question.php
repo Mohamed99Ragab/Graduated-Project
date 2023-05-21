@@ -42,5 +42,11 @@ class Question extends Model
 
     }
 
+    public function results(){
+
+        return $this->hasMany(Result::class,'question_id');
+
+    }
+
 
 }

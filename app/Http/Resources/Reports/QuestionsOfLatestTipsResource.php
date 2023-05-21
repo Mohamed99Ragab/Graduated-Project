@@ -15,17 +15,12 @@ class QuestionsOfLatestTipsResource extends JsonResource
     public function toArray($request)
     {
 
-        $questions = [];
-        foreach ($this->questions as $question){
-
-            $questions [] = $question->question;
-        }
 
 
 
         return [
 
-            'questions'=>$questions
+            'question'=>$this->question
 
         ];
     }

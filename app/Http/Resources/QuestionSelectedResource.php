@@ -15,18 +15,15 @@ class QuestionSelectedResource extends JsonResource
     public function toArray($request)
     {
 
-        $arr_tips = [];
-        foreach ($this->tips as $tip){
 
-            $arr_tips [] = $tip->id;
-        }
+
 
 
         return [
-            'id'=>$this->id,
-            'question'=>$this->question,
-            'subject'=>$this->subject->name,
-            'status'=>!empty($arr_tips[0]) ? 1 :0
+            'id'=>$this->questions->id,
+            'question'=>$this->questions->question,
+            'subject'=>$this->questions->subject->name,
+            'status'=>$this->status
 
         ];
     }

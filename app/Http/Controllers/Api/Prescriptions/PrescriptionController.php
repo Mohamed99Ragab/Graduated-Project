@@ -62,7 +62,7 @@ class PrescriptionController extends Controller
 
         try {
 
-            Prescription::create([
+            $prescription = Prescription::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'note'=>$request->note,
                 'date'=>$request->date,
@@ -72,9 +72,9 @@ class PrescriptionController extends Controller
             // upload file on server
             $this->uploadImage($request->file('file'),'prescriptions','images');
 
+            $prescription_res = new PrescriptionResource($prescription);
 
-
-            return $this->responseJson(null,'تم حفظ البيانات بنجاح',true);
+            return $this->responseJson($prescription_res,'تم حفظ البيانات بنجاح',true);
 
 
         }

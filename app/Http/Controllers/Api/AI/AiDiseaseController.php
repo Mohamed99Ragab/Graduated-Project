@@ -37,7 +37,7 @@ class AiDiseaseController extends Controller
 
 
 
-            AiDisease::create([
+            $ai = AiDisease::create([
                 'user_id'=>Auth::guard('api')->id(),
                 'prediction'=>$request->prediction,
                 'disease_name'=>$request->disease,
@@ -49,7 +49,7 @@ class AiDiseaseController extends Controller
 
 
 
-            return $this->responseJson(null,'تم حفظ البيانات بنجاح',true);
+            return $this->responseJson($ai,'تم حفظ البيانات بنجاح',true);
 
 
         }

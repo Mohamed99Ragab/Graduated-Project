@@ -18,10 +18,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(AdminSeeder::class);
         $this->call([
             AdminSeeder::class,
-            AllergySeeder::class,
-            GeneticDiseaseSeeder::class,
-            ChronicDiseaseSeeder::class,
-            SkinDiseaseSeeder::class,
+            TeethSeeder::class,
             DaysWeekSeeder::class
         ]);
     }

@@ -17,6 +17,8 @@ class CreateResultsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('question_id')->constrained('questions')->cascadeOnDelete();
+            $table->foreignId('tip_id')->constrained('tips')->cascadeOnDelete();
+
             $table->tinyInteger('status');
         });
     }

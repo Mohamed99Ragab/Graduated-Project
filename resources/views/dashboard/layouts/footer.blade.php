@@ -6,7 +6,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-right d-none d-sm-block">
-                    تطوير فريق عمل بكلية الحاسبات و الذكاء الاصطناعي
+                    تطوير <a target="_blank" href="https://www.linkedin.com/in/mohamed-ragab-programmer/"> <span class="text-danger px-1"><i class="fa fa-heart"></i></span>الجويلي</a>
                 </div>
             </div>
         </div>
