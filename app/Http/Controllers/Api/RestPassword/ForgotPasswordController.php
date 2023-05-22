@@ -21,6 +21,7 @@ class ForgotPasswordController extends Controller
     public function __invoke(Request $request)
     {
 
+
         if(is_numeric($request->email_or_phone)) {
 
 
@@ -94,7 +95,7 @@ class ForgotPasswordController extends Controller
             ]);
 
             // Send email to user
-            Mail::to($request->email)->send(new SendCodeResetPasswordMail($codeData->code));
+            Mail::to($codeData->email)->send(new SendCodeResetPasswordMail($codeData->code));
 
             return $this->responseJson(null,'يرجى التحقق من بريدك الإلكتروني ، فنحن نرسل رمز التحقق',true);
         }

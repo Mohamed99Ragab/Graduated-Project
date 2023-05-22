@@ -26,9 +26,10 @@ class RegisterReguest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
-            'email' => 'required|string|email|unique:users,email',
+            'email' => 'string|email|unique:users,email',
             'phone_number' => 'digits:11|unique:users,phone_number',
             'photo' => 'image',
             'gender' => 'required|string|in:ذكر,انثى',
@@ -44,7 +45,6 @@ class RegisterReguest extends FormRequest
         return [
             'name.required' => 'يرجى ادخال الاسم',
             'name.regex' => 'يرجى ادخال الاسم بالعربي',
-            'email.required' => 'يرجي ادخال الايميل',
             'email.email' => 'يجب ان يكون هذا الحقل من نوع ايميل',
             'email.unique' => 'هذا الايميل مستخدم من قبل',
             'phone_number.digits'=>'يجب ان يتكون رقم الموبيل من 11 رقم',

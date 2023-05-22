@@ -1321,7 +1321,7 @@ class GrowthController extends Controller
                     'measure_date'=>$request->measure_date
                 ]);
 
-                return $this->responseJson(null,'تم التعديل بنجاح',true);
+                return $this->responseJson($growth,'تم التعديل بنجاح',true);
 
 
             }
