@@ -49,7 +49,6 @@ class NotificationsResource extends JsonResource
             'type'=>$type
 
 
-
         ];
     }
 }

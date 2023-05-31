@@ -17,7 +17,8 @@ class QuestionSubjectResource extends JsonResource
         return [
             'id'=>$this->id,
             'question'=>$this->question,
-            'subject'=>$this->subject->name
+            'subject'=>$this->subject->name,
+            'status'=>0
         ];
     }
 }

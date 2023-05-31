@@ -56,7 +56,7 @@ class MedicationReminderWeeklyCommand extends Command
                        $days = $time->medicinedays;
 
                        foreach ($days as $day) {
-                           if ($day->day == Carbon::now()->dayName && date_format(Carbon::parse($time->time), 'h') == date_format(Carbon::now()->addHour(), 'h')) {
+                           if ($day->day == Carbon::now()->dayName && date_format(Carbon::parse($time->time), 'g:i') == date_format(Carbon::now()->addHour(), 'g:i')) {
 
                                $user->notify(new MedicationReminderNotification('تذكير موعد العلاج', " موعد اخذ الدواء " . $reminder->medicine_name . " الان"));
                            }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReminderResource extends JsonResource
@@ -38,7 +39,7 @@ class ReminderResource extends JsonResource
 
             $times []= [
                 'id'=>$time->id,
-                'time'=>$time->time,
+                'time'=>date_format(Carbon::parse($time->time),'g:i a'),
                 'month'=>$time->month,
             ];
 

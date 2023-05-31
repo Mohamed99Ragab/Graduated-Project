@@ -4,6 +4,8 @@ namespace App\Http\Requests\Reminder;
 
 use App\Http\Traits\HttpResponseJson;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class MedicationReminderRequest extends FormRequest
 {
@@ -21,7 +23,11 @@ class MedicationReminderRequest extends FormRequest
     public function rules()
     {
         return [
-            'medicine_name'=>'required|string|regex:/^[\p{Arabic} ]+$/u',
+            'medicine_name'=>[
+               'required','string','regex:/^[\p{Arabic} ]+$/u',
+                Rule::unique('medication_reminders')
+                    ->where('user_id', Auth::guard('api')->id())
+                ],
             'appointment'=>'required|string',
             'end_date'=>'required|date|date_format:Y-m-d|after:now',
             'mediceTimes.*.time'=>'required',
@@ -36,6 +42,7 @@ class MedicationReminderRequest extends FormRequest
         return [
             'medicine_name.string'=>'يرجى ادخال اسم الدواء كنص وليس شيئا اخر',
             'medicine_name.required'=>'يرجى ادخال اسم الدواء',
+            'medicine_name.unique'=>'هذا الدواء مسجل مسبقا',
             'medicine_name.regex'=>'يرجى ادخال اسم الدواء بالعربي فقط',
             'appointment.required'=>'يرجى تحديد حالة الدواء',
             'end_date.required'=>'يرجى تحديد تاريخ الانتهاء',
