@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Reminder;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Reminder\EditMedicationReminderRequest;
 use App\Http\Requests\Reminder\MedicationReminderRequest;
 use App\Http\Resources\ReminderResource;
 use App\Http\Traits\HttpResponseJson;
@@ -122,7 +123,7 @@ class MedicationReminderController extends Controller
     }
 
 
-    public function update_reminder(MedicationReminderRequest $request , $reminder_id){
+    public function update_reminder(EditMedicationReminderRequest $request , $reminder_id){
 
 
 
