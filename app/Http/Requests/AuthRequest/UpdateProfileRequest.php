@@ -23,7 +23,7 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
-            'email' => 'required|string|email|unique:users,email,'.Auth::guard('api')->id(),
+            'email' => 'string|email|unique:users,email,'.Auth::guard('api')->id(),
             'phone_number'=>'digits:11|unique:users,phone_number,'.Auth::guard('api')->id(),
             'photo' => 'image',
             'gender' => 'required|string|in:ذكر,انثى',
@@ -39,7 +39,6 @@ class UpdateProfileRequest extends FormRequest
         return [
             'name.required' => 'يرجى ادخال الاسم',
             'name.regex' => 'يرجى ادخال الاسم بالعربي',
-            'email.required' => 'يرجي ادخال الايميل',
             'email.email' => 'يجب ان يكون هذا الحقل من نوع ايميل',
             'email.unique' => 'هذا الايميل مستخدم من قبل',
             'password.min' => 'يجب الا يقل الباسورد عن 8 احرف',
