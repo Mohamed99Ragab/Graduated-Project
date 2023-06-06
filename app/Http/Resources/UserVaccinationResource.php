@@ -55,7 +55,11 @@ class UserVaccinationResource extends JsonResource
             $this->vaccination_date = date_format(Carbon::parse($birth_date)->addMonths($this->vaccine_age - $ages['months']),'Y-m-d');
 
         }
+        elseif ($this->vaccine_age < $ages['months'])
+        {
+            $this->vaccination_date = 'لقد فاتك معاد التطعيم';
 
+        }
 
 
 
@@ -72,7 +76,8 @@ class UserVaccinationResource extends JsonResource
             'number_syringe'=>$this->number_syringe,
             'proposed_vaccination_date'=>$proposed_vaccination_date,
             'vaccination_date'=>$this->vaccination_date,
-            'vaccine_reminder_date'=>date_format(Carbon::parse($this->vaccination_date)->subDay(),'Y-m-d')
+            'vaccine_reminder_date'=> $this->vaccination_date !='قد فاتك معاد التطعيم'?date_format(Carbon::parse($this->vaccination_date)->subDay(),'Y-m-d'):null
+
 
         ];
     }
