@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->command('medicine:reminder')->hourly();
+        $schedule->command('medicine:reminder')->everyMinute();
         $schedule->command('medicine:weekly')->hourly();
         $schedule->command('medicine:monthly')->daily();
         $schedule->command('vaccine:reminder')->daily();

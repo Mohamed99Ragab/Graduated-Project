@@ -30,7 +30,7 @@ class TestController extends Controller
     public function test()
     {
 
-        return date_format(Carbon::now()->addHour(),'g:i a');
+        return date_format(Carbon::now()->addHour(),'g a');
 
 
 
