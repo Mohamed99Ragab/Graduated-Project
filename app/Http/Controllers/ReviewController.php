@@ -67,11 +67,11 @@ class ReviewController extends Controller
 
         $user = User::find(Auth::guard('api')->id());
 
-        $admin = Admin::find(1);
+        $admin = Admin::first();
         $admin->notify(new ReviewsNotification($user->name,$review->message));
 
 
-        return $this->responseJson(null,'شكرا لاجل تقييمك من اجلنا',true);
+        return $this->responseJson(null,'سوف يتم التواصل معك بخصوص المشكلة من قبل مسؤلى النظام',true);
 
     }
 }

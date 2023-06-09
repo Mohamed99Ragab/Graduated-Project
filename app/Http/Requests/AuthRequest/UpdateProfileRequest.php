@@ -21,16 +21,46 @@ class UpdateProfileRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
-            'email' => 'string|email|unique:users,email,'.Auth::guard('api')->id(),
-            'phone_number'=>'digits:11|unique:users,phone_number,'.Auth::guard('api')->id(),
-            'photo' => 'image',
-            'gender' => 'required|string|in:ذكر,انثى',
-            'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
-            'password' => 'string|min:8',
 
-        ];
+        if(empty($this->phone_number)&&empty($this->email) || (!empty($this->phone_number)&&!empty($this->email))){
+            return [
+                'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
+                'email' => 'string|email|unique:users,email,'.Auth::guard('api')->id(),
+                'phone_number'=>'digits:11|unique:users,phone_number,'.Auth::guard('api')->id(),
+                'photo' => 'image',
+                'gender' => 'required|string|in:ذكر,انثى',
+                'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
+                'password' => 'string|min:8',
+
+            ];
+
+        }
+        elseif (!empty($this->phone_number) && empty($this->email)){
+            return [
+                'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
+                'phone_number'=>'digits:11|unique:users,phone_number,'.Auth::guard('api')->id(),
+                'photo' => 'image',
+                'gender' => 'required|string|in:ذكر,انثى',
+                'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
+                'password' => 'string|min:8',
+            ];
+
+        }
+        elseif (empty($this->phone_number) && !empty($this->email)){
+            return [
+                'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
+                'email' => 'string|email|unique:users,email,'.Auth::guard('api')->id(),
+                'photo' => 'image',
+                'gender' => 'required|string|in:ذكر,انثى',
+                'birth_date' => 'required|date|date_format:Y-m-d|before:tomorrow',
+                'password' => 'string|min:8',
+
+            ];
+
+        }
+
+
+
     }
 
 

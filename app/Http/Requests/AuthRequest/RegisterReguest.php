@@ -26,17 +26,42 @@ class RegisterReguest extends FormRequest
      */
     public function rules()
     {
+        if(empty($this->phone_number)&&empty($this->email) || (!empty($this->phone_number)&&!empty($this->email))){
+            return [
+                'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
+                'email' => 'string|email|unique:users,email',
+                'phone_number' => 'digits:11|unique:users,phone_number',
+                'photo' => 'image',
+                'gender' => 'required|string|in:ذكر,انثى',
+                'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
+                'password' => 'required|string|confirmed|min:8',
+                'fcm_token' => 'required'
+            ];
+        }
+        elseif (!empty($this->phone_number) && empty($this->email)){
+            return [
+                'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
+                'phone_number' => 'digits:11|unique:users,phone_number',
+                'photo' => 'image',
+                'gender' => 'required|string|in:ذكر,انثى',
+                'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
+                'password' => 'required|string|confirmed|min:8',
+                'fcm_token' => 'required'
+            ];
+        }
+        elseif (empty($this->phone_number) && !empty($this->email)){
+            return [
+                'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
+                'email' => 'string|email|unique:users,email',
+                'photo' => 'image',
+                'gender' => 'required|string|in:ذكر,انثى',
+                'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
+                'password' => 'required|string|confirmed|min:8',
+                'fcm_token' => 'required'
+            ];
+        }
 
-        return [
-            'name' => 'required|string|between:2,100|regex:/^[\p{Arabic} ]+$/u',
-            'email' => 'string|email|unique:users,email',
-            'phone_number' => 'digits:11|unique:users,phone_number',
-            'photo' => 'image',
-            'gender' => 'required|string|in:ذكر,انثى',
-            'birth_date' => 'required|date_format:Y-m-d|before:tomorrow',
-            'password' => 'required|string|confirmed|min:8',
-            'fcm_token' => 'required'
-        ];
+
     }
 
 
