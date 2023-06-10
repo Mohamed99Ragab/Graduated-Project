@@ -83,7 +83,8 @@ class QuestionsController extends Controller
                         'user_id'=>Auth::guard('api')->id(),
                         'question_id'=>$answer['question_id'],
                         'tip_id'=>$tip_id,
-                        'status'=>$answer['status']
+                        'status'=>$answer['status'],
+                        'created_at'=>date_format(Carbon::now(),'Y-m-d')
 
                     ]);
 

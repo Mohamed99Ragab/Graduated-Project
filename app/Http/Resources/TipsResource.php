@@ -34,7 +34,8 @@ class TipsResource extends JsonResource
 
 
 
-
+        $result_tip_created_date = Result::where('tip_id',$this->id)
+            ->where('user_id',Auth::guard('api')->id())->first();
 
 
 
@@ -42,6 +43,7 @@ class TipsResource extends JsonResource
             'id'=>$this->id,
             'description'=>$this->description,
             'age_stage'=>$age_stages[0],
+            'date'=>$result_tip_created_date->created_at,
             'unAnswerQuestions'=>$qusionts_unanswered
 
         ];

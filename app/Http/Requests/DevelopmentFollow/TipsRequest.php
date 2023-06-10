@@ -24,10 +24,10 @@ class TipsRequest extends FormRequest
     {
         return [
             'answers.*.question_id'=>[
-                'required',
-                Rule::unique('results')
-                    ->where('user_id', Auth::guard('api')->id())
-            ],
+            'required','exists:questions,id',
+            Rule::unique('results')
+                ->where('user_id', Auth::guard('api')->id())
+        ],
             'answers.*.status'=>'required|in:0,1',
         ];
     }
@@ -36,6 +36,7 @@ class TipsRequest extends FormRequest
     {
         return [
             'answers.*.question_id.required'=>'معرف السؤال مطلوب',
+            'answers.*.question_id.exists'=>'لا يوجد سؤال بهذا المعرف',
             'answers.*.question_id.unique'=>'لا يمكن تحديد السؤال اكثر من مرة يمكنك التعديل على الملاحظة',
             'answers.*.status.required'=>'حالة السؤال مطلوبة',
             'answers.*.status.in'=>'عذرا يجب ان تكون حالة السؤال فقط 1,0',

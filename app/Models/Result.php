@@ -18,7 +18,8 @@ class Result extends Model
         'user_id',
         'question_id',
         'tip_id',
-        'status'
+        'status',
+        'created_at'
     ];
 
     public function questions(){
