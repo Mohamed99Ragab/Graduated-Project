@@ -59,10 +59,10 @@ class QuestionsController extends Controller
 
             foreach ($answers as $answer){
 
-                if($answer['status']==1){
+//                if($answer['status']==1){
                     $question_ids [] = $answer['question_id'];
 
-                }
+//                }
 
             }
 
@@ -70,26 +70,27 @@ class QuestionsController extends Controller
 
             $tip_ids = [];
             foreach ($questions as $question){
-                $tip_ids [] = $question->tips[0]->id;
+
+                $tip_ids [] = $question->tips;
 
 
             }
 
 
-            foreach ($tip_ids as $tip_id){
+
                 foreach ($answers as $answer){
 
                     Result::create([
                         'user_id'=>Auth::guard('api')->id(),
                         'question_id'=>$answer['question_id'],
-                        'tip_id'=>$tip_id,
+                        'tip_id'=>$tip_ids[0][0]->id,
                         'status'=>$answer['status'],
                         'created_at'=>date_format(Carbon::now(),'Y-m-d')
 
                     ]);
 
                 }
-            }
+
 
 
 

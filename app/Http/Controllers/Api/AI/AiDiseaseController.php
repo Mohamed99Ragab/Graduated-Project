@@ -49,7 +49,7 @@ class AiDiseaseController extends Controller
 
 
 
-            return $this->responseJson($ai,'تم حفظ البيانات بنجاح',true);
+            return $this->responseJson(new AiDiseaseResource($ai),'تم حفظ البيانات بنجاح',true);
 
 
         }

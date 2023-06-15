@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     public function read_all_notification(){
 
-        $admin = Admin::find(1);
+        $admin = Admin::first();
         $admin->unreadNotifications->markAsRead();
 
         return back();
