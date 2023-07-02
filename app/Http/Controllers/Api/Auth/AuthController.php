@@ -149,12 +149,19 @@ class AuthController extends Controller
                 //to upload photo on server
                 $this->uploadImage($request->file('photo'),'users','images');
 
+                if(!empty($user->email)){
+                    if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
 
+                        return $this->responseJson(null,'خطاء في عملية الدخول',false);
+                    }
+                }else{
+                    if (! $token = auth()->attempt(['phone_number'=>$user->phone_number,'password'=>$request->password])) {
 
-                if (! $token = auth()->attempt(['email'=>$request->email,'password'=>$request->password])) {
-
-                    return $this->responseJson(null,'خطاء في عملية الدخول',false);
+                        return $this->responseJson(null,'خطاء في عملية الدخول',false);
+                    }
                 }
+
+
 
                 // add devive token to user
                 DeviceToken::create([
