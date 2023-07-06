@@ -21,11 +21,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+
+
     <style>
         body{
             font-family: 'Cairo', sans-serif;
         }
     </style>
+
+
+
+
+
 </head>
 
 <body>
@@ -36,15 +52,6 @@
 </div>
 <div class="account-pages my-5 pt-sm-5">
     <div class="container">
-
-        @if(session()->has('error'))
-
-                {{session()->get('error')}}
-
-        @endif
-
-
-
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
                 <div class="card overflow-hidden">
@@ -108,6 +115,30 @@
 
 <script src="{{asset('dashboard/assets/js/app.js')}}"></script>
 
+<script>
+    @if(Session::has('success'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.success("{{ session('success') }}");
+    @endif
+
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+
+
+
+
+</script>
 </body>
 
 </html>

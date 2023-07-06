@@ -21,6 +21,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
     <style>
         body{
             font-family: 'Cairo', sans-serif;
@@ -29,6 +37,7 @@
 </head>
 
 <body>
+
 <div class="home-btn d-none d-sm-block">
     <a href="{{route('login')}}" class="text-dark"><i class="fas fa-home h2"></i></a>
 </div>
@@ -54,11 +63,7 @@
                             <form class="form-horizontal" action="{{route('send.email')}}"method="post">
                                 @csrf
 
-                                @if(session()->has('success'))
-                                    <div class="alert alert-success text-center mb-4" role="alert">
-                                        {{session()->get('success')}}
-                                    </div>
-                                @endif
+
 
 
                                 <div class="alert alert-success text-center mb-4" role="alert">
@@ -99,7 +104,30 @@
 <script src="{{asset('dashboard/assets/libs/node-waves/waves.min.js')}}"></script>
 
 <script src="{{asset('dashboard/assets/js/app.js')}}"></script>
+<script>
+    @if(Session::has('success'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.success("{{ session('success') }}");
+    @endif
 
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+
+
+
+
+</script>
 </body>
 
 </html>
