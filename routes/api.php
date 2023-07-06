@@ -20,7 +20,7 @@ use App\Http\Controllers\Api\RestPassword\ResetPasswordController;
 use App\Http\Controllers\Api\Teeth\TeethController;
 use App\Http\Controllers\Api\Teeth\TeethDevelopmentController;
 use App\Http\Controllers\Api\Vaccinations\VaccinationController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ContactUsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -159,7 +159,7 @@ Route::group(['middleware'=>'jwt.verify'],function (){
 
 
     // Reviews
-    Route::post('make-review',[ReviewController::class,'store']);
+    Route::post('make-review',[ContactUsController::class,'store']);
 
     // Notifiactions
     Route::get('history-notify',[NotificationController::class,'history_of_notidfication']);

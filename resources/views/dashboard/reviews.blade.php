@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 @section('title')
-    المراجعات
+    طلبات التواصل
 @endsection
 
 @section('css')
@@ -10,9 +10,7 @@
 
     <style>
 
-        .badge{
-            display: none;
-        }
+
 
     </style>
 @endsection
@@ -27,12 +25,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-flex align-items-center justify-content-between">
-                <h4 class="page-title mb-0 font-size-18">المراجعات</h4>
+                <h4 class="page-title mb-0 font-size-18">طلبات التواصل</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">الرئيسية</a></li>
-                        <li class="breadcrumb-item active">المراجعات</li>
+                        <li class="breadcrumb-item active">طلبات التواصل</li>
                     </ol>
                 </div>
 
@@ -53,6 +51,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>صورة المستخدم</th>
                             <th>المستخدم</th>
                             <th>الرسالة</th>
                             <th>العمليات</th>
@@ -63,6 +62,15 @@
                         @foreach($reviews as $review)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
+                                <td>
+                                    @if(!empty($review->user->photo))
+                                        <img style="max-width: 70px;border-radius: 2px"  src="{{asset('images/users/'.$review->user->photo)}}" alt="" srcset="">
+
+                                    @else
+                                        <img class="rounded-circle "style="max-width: 50px" src="{{asset('dashboard/assets/images/baby-user.jpg')}}" alt="" srcset="">
+
+                                    @endif
+                                </td>
                                 <td>{{$review->user->name}}</td>
                                 <td>{{$review->message}}</td>
 
@@ -72,6 +80,12 @@
                                     <button data-toggle="modal" data-target="#deleteModal{{$review->id}}" class="btn btn-danger btn-sm waves-effect waves-light">
                                         حذف
                                         <i class="fa fa-trash m-1"></i>
+
+                                    </button>
+
+                                    <button data-toggle="modal" data-target="#supportModal{{$review->id}}" class="btn btn-success btn-sm waves-effect waves-light">
+                                        رد
+                                        <i class="fa fa-reply m-1"></i>
 
                                     </button>
 
@@ -108,6 +122,41 @@
                                                 </div>
                                             </form>
 
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /.modal -->
+
+
+                            <!-- support modal -->
+                            <div id="supportModal{{$review->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title mt-0" id="myModalLabel"> الرد على رسالة <span class="text-primary">"{{$review->user->name}}"</span>  </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{url('support/reply')}}" method="post">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="message">:رسالتك</label>
+                                                    <textarea class="form-control" rows="7" cols="6" name="message"></textarea>
+                                                    <input type="hidden" name="emailOfUser" value="{{$review->user->email}}">
+                                                    <input type="hidden" name="phoneOfUser" value="{{$review->user->phone_number}}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">اغلاق</button>
+                                                    <button type="submit" class="btn btn-success waves-effect waves-light">ارسال</button>
+                                                </div>
+
+
+                                            </form>
                                         </div>
 
                                     </div>

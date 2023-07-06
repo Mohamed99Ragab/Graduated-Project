@@ -75,7 +75,8 @@ class AdminController extends Controller
             }
             $admin->save();
 
-            toastr()->success('تم تحديث البروفيل');
+//            toastr()->success('تم تحديث البروفيل');
+            session()->flash('success','تم تحديث البروفيل');
             return redirect('/home');
 
 

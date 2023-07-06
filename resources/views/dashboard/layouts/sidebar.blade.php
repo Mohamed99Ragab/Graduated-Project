@@ -73,8 +73,8 @@
 
                 <li>
                     <a href="{{url('reviews')}}" class="waves-effect">
-                        <i class="mdi mdi-star"></i>
-                        <span >المراجعات</span>
+                        <i class="mdi mdi-contacts"></i>
+                        <span >طلبات التواصل</span>
                     </a>
 
                 </li>

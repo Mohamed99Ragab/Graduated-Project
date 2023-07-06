@@ -58,12 +58,12 @@
                                         <h6 class="mt-0 mb-1">{{$notification->data['title']}}</h6>
                                         <div class="font-size-12 text-muted">
                                             <p class="mb-1">{{$notification->data['body']}}</p>
-                                            @php
-                                                $now = \Illuminate\Support\Carbon::now();
-                                                $created_at = \Illuminate\Support\Carbon::parse($notification->created_at);
-                                                $diffMinutes = $created_at->diffInMinutes($now)   // 180
-                                            @endphp
-                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> {{$diffMinutes}} دقائق من الزمن</p>
+{{--                                            @php--}}
+{{--                                                $now = \Illuminate\Support\Carbon::now();--}}
+{{--                                                $created_at = \Illuminate\Support\Carbon::parse($notification->created_at);--}}
+{{--                                                $diffMinutes = $created_at->diffInMinutes($now)   // 180--}}
+{{--                                            @endphp--}}
+{{--                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i> {{$diffMinutes}} دقائق من الزمن</p>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -73,11 +73,7 @@
                             @endforelse
 
                         </div>
-                        <div class="p-2 border-top">
-                            <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
-                                <i class="mdi mdi-arrow-right-circle mr-1"></i> جميع المراجعات..
-                            </a>
-                        </div>
+
                     </div>
                 </div>
 

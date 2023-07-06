@@ -31,7 +31,9 @@ class QuestionsController extends Controller
         $ages = $this->calc_child_age(Auth::guard('api')->user()->birth_date,date_format(Carbon::now(),'Y-m-d'));
 
 
-        $questions = Question::with('subject')->where('age_stage',$ages['months'])->get();
+        $questions = Question::with(['subject'=>function($q){
+            return $q->orderBy('name');
+        }])->where('age_stage',$ages['months'])->get();
 
         $questions = QuestionSubjectResource::collection($questions);
 
@@ -150,10 +152,11 @@ class QuestionsController extends Controller
 
         $user_questions_results = Result::with(['questions'=>function($q){
 
-            return $q->with('subject');
+            return $q->with('subject')->orderBy('subject_id');
         }])
             ->where('user_id',Auth::guard('api')->id())
             ->where('tip_id',$tip_id)->get();
+
 
 
 
@@ -163,7 +166,10 @@ class QuestionsController extends Controller
 
             $questions = QuestionSelectedResource::collection($user_questions_results);
 
-            return $this->responseJson($questions,null,true);
+            $questions =  collect($questions)->sortBy('subject')->toArray();
+
+
+            return $this->responseJson(array_values($questions),null,true);
         }
 
         return $this->responseJson($user_questions_results,'لا يوجد اسئلة خاصة بهذة الملاحظة',true);

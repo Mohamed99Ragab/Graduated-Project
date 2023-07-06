@@ -66,12 +66,14 @@ class VaccinationReminderCommand extends Command
                     return $q->where('user_id',$user->id)->where('status',1);
                 })->get();
 
-                if(isset($vaccinations) & $vaccinations->count() >0){
+                if(isset($vaccinations) && $vaccinations->count() > 0){
 
                     foreach ($vaccinations as $vaccination){
 
 
-                        if(date_format(Carbon::parse($birth_date)->addMonths($vaccination->vaccine_age - $ages['months'])->subDays(1),'Y-m-d') == $date_now)
+                        $vaccine_date = date_format(Carbon::parse($birth_date)->addMonths($vaccination->vaccine_age - $ages['months'])->subDays(1),'Y-m-d');
+
+                        if($vaccine_date == $date_now)
                         {
                             $user->notify(new VaccinationReminderNotification('تذكير بمعياد اخذ التطعيمات',
                                 "$user->name مرحبا ".' '.'نذكرك ميعاد اخذ'.' '.$vaccination->name.' '.'اليوم لطفلك'));

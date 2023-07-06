@@ -8,7 +8,7 @@ use App\Http\Controllers\Dashboard\DevelopmentFollow\TipsController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\TeethsController;
 use App\Http\Controllers\Dashboard\VaccinationController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\TestController;
 use App\Models\User;
 use App\Notifications\VaccinationReminderNotification;
@@ -85,9 +85,12 @@ Route::group(['middleware'=>'auth:admin'],function (){
 
 
 
-    // Reviews
-    Route::get('reviews',[ReviewController::class,'index']);
-    Route::delete('reviews/delete/{review_id}',[ReviewController::class,'delete_review']);
+    // User Support
+    Route::get('reviews',[ContactUsController::class,'index']);
+    Route::delete('reviews/delete/{review_id}',[ContactUsController::class,'delete_review']);
+    Route::post('support/reply',[ContactUsController::class,'reply_to_user_support'])->name('support.reply');
+
+
 
     //notifications
     Route::get('read-all',[HomeController::class,'read_all_notification']);

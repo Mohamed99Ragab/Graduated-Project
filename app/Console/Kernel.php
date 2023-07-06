@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('vaccine:reminder')->daily();
         $schedule->command('teeth:reminder')->monthlyOn(1,'12:00');
         $schedule->command('devflow:notify')->monthlyOn(1,'10:00');
-        $schedule->command('delete:oldNotify')->daily();
+//        $schedule->command('delete:oldNotify')->daily();
         $schedule->command('growth:reminder')->monthly();
 
     }
