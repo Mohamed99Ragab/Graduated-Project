@@ -24,7 +24,8 @@ class MedicalDetail extends Model
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
+        'medicine_file'
     ];
 
 
